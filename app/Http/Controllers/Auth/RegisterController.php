@@ -19,8 +19,8 @@ class RegisterController extends Controller
         // ]);
         // $this->validate($request, [
         //     'name' => 'required|max:255',
-        //     'email' => 'required|max:255|unique:customers|email',
-        //     'password' => 'required|max:255|min:8',
+        //     'email' => 'required|max:255|unique:users|email',
+        //     'password' => 'required|max:255|min:6',
         //     'phone' => 'required|max:255',
         // ]);
         $validator = Validator::make($request->all(), [
@@ -30,7 +30,7 @@ class RegisterController extends Controller
             'phone' => 'required|max:255'
         ]);
         if ($validator->fails()) {
-            return response(['errors' => $validator->errors()->all()], 422);
+            return response(['errors' => $validator->errors()], 422);
         }
 
         $user = User::create([

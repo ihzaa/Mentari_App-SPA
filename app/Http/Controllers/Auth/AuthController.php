@@ -19,7 +19,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
         ]);
         if ($validator->fails()) {
-            return response(['errors' => $validator->errors()->all()], 422);
+            return response(['errors' => $validator->errors()], 422);
         }
 
         $data = [
@@ -37,7 +37,12 @@ class AuthController extends Controller
                 ]
             ], 200);
         } else {
-            return response()->json(['error' => 'Unauthorised'], 401);
+            return response()->json([
+                'message' => 'Authentication is invalid.',
+                'errors' => [
+                    'root' => 'Username or Password not found.'
+                ]
+            ], 401);
         }
     }
 
