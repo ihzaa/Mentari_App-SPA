@@ -1,5 +1,10 @@
 import Router from "./router";
 import store from "./store";
+import { Carousel } from "bootstrap";
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
+
+// import "swiper/css/swiper.css";
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -7,7 +12,6 @@ import store from "./store";
  */
 
 require("./bootstrap");
-
 window.Vue = require("vue");
 
 /**
