@@ -2013,6 +2013,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -20389,7 +20393,8 @@ var staticRenderFns = [
           type: "text",
           id: "name",
           "aria-describedby": "name",
-          placeholder: "Enter your name"
+          placeholder: "Enter your name",
+          autocomplete: "name"
         }
       })
     ])
@@ -20409,7 +20414,8 @@ var staticRenderFns = [
           type: "email",
           id: "exampleInputEmail1",
           "aria-describedby": "emailHelp",
-          placeholder: "Enter your email"
+          placeholder: "Enter your email",
+          autocomplete: "email"
         }
       })
     ])
@@ -20427,7 +20433,8 @@ var staticRenderFns = [
           type: "text",
           id: "phone",
           "aria-describedby": "phone",
-          placeholder: "Enter your phone"
+          placeholder: "Enter your phone",
+          autocomplete: "phone"
         }
       })
     ])
@@ -20446,7 +20453,8 @@ var staticRenderFns = [
         attrs: {
           type: "password",
           id: "exampleInputPassword1",
-          placeholder: "Password"
+          placeholder: "Password",
+          autocomplete: "password"
         }
       })
     ])

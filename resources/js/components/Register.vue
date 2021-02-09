@@ -19,6 +19,7 @@ html {
               id="name"
               aria-describedby="name"
               placeholder="Enter your name"
+              autocomplete="name"
             />
           </div>
           <div class="form-group">
@@ -29,6 +30,7 @@ html {
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
               placeholder="Enter your email"
+              autocomplete="email"
             />
           </div>
           <div class="form-group">
@@ -39,6 +41,7 @@ html {
               id="phone"
               aria-describedby="phone"
               placeholder="Enter your phone"
+              autocomplete="phone"
             />
           </div>
           <div class="form-group">
@@ -48,6 +51,7 @@ html {
               class="form-control"
               id="exampleInputPassword1"
               placeholder="Password"
+              autocomplete="password"
             />
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
