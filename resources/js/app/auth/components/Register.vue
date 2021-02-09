@@ -38,7 +38,7 @@
 
               <input
                 class="form-control"
-                type="email"
+                type="text"
                 name="email"
                 id="email"
                 placeholder="Your Email"
@@ -169,6 +169,8 @@ export default {
           password: this.password,
         },
         context: this,
+      }).then(() => {
+        if (this.errors.length == 0) this.$router.replace({ name: "home" });
       });
       //   } else {
       //     this.passwordNotEquals();

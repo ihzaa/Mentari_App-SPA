@@ -105,13 +105,15 @@ export default {
       login: "auth/login",
     }),
     submit() {
-        this.errors = []
+      this.errors = [];
       this.login({
         payload: {
           email: this.email,
           password: this.password,
         },
         context: this,
+      }).then(() => {
+        if (this.errors.length == 0) this.$router.replace({ name: "home" });
       });
     },
   },

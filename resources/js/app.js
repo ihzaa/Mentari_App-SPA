@@ -1,8 +1,8 @@
 import Router from "./router";
 import store from "./store";
 import { Carousel } from "bootstrap";
-import '@fortawesome/fontawesome-free/css/all.css'
-import '@fortawesome/fontawesome-free/js/all.js'
+import "@fortawesome/fontawesome-free/css/all.css";
+import "@fortawesome/fontawesome-free/js/all.js";
 
 // import "swiper/css/swiper.css";
 /**
@@ -13,6 +13,12 @@ import '@fortawesome/fontawesome-free/js/all.js'
 
 require("./bootstrap");
 window.Vue = require("vue");
+store.dispatch("auth/setToken").then(() => {
+    store.dispatch("auth/fetchUser").catch(() => {
+        store.dispatch("auth/removeToken");
+        router.replace({ name: "login" });
+    });
+});
 
 /**
  * The following block of code may be used to automatically register your
