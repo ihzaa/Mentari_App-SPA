@@ -19,9 +19,9 @@
 
 </head>
 
-<body class="">
-    <div id="app">
-        <app></app>
+<body class="h-100">
+    <div id="app" class="h-100">
+        <router-view></router-view>
     </div>
 </body>
 
