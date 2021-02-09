@@ -1,4 +1,5 @@
 import Register from "./components/Register";
+import Navigation from "./components/Navigation";
 
 export default {
     mode: "history",
@@ -11,6 +12,10 @@ export default {
         {
             path: "/register",
             component: Register
+        },
+        {
+            path: "/",
+            component: Navigation
         }
     ]
 };
