@@ -11,11 +11,13 @@ export default {
         // },
         {
             path: "/register",
-            component: Register
+            component: Register,
+            name: "register"
         },
         {
             path: "/",
-            component: Navigation
+            component: Navigation,
+            name: "home"
         }
     ]
 };

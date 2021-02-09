@@ -103,6 +103,7 @@ export default {
         })
         .then((resp) => {
           localStorage.setItem("token", resp.data.meta.token);
+          this.$router.push({ name: 'home' })
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
