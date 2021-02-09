@@ -1990,50 +1990,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      form: {
-        name: "",
-        email: "",
-        password: ""
-      },
+      name: "",
+      email: "",
+      password: "",
+      phone: "",
       errors: []
     };
   },
   methods: {
-    saveForm: function saveForm() {
+    submit: function submit() {
       var _this = this;
 
-      axios.post("/api/register", this.form).then(function () {
-        console.log("saved");
+      this.errors = [];
+      axios.post("/api/auth/register", {
+        name: this.name,
+        email: this.email,
+        phone: this.phone,
+        password: this.password
+      }).then(function (resp) {
+        localStorage.setItem("token", resp.data.meta.token);
       })["catch"](function (error) {
         _this.errors = error.response.data.errors;
       });
@@ -20359,13 +20337,208 @@ var render = function() {
               }
             },
             [
-              _vm._m(0),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.name,
+                      expression: "name"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.name },
+                  attrs: {
+                    type: "text",
+                    id: "name",
+                    "aria-describedby": "name",
+                    placeholder: "Enter your name",
+                    autocomplete: "name"
+                  },
+                  domProps: { value: _vm.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.name = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.name
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "alert alert-danger",
+                        attrs: { role: "alert" }
+                      },
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(_vm.errors.name[0]) +
+                            "\n          "
+                        )
+                      ]
+                    )
+                  : _vm._e()
+              ]),
               _vm._v(" "),
-              _vm._m(1),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                  _vm._v("Email address")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.email,
+                      expression: "email"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.email },
+                  attrs: {
+                    type: "email",
+                    id: "exampleInputEmail1",
+                    "aria-describedby": "emailHelp",
+                    placeholder: "Enter your email",
+                    autocomplete: "email"
+                  },
+                  domProps: { value: _vm.email },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.email = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.email
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "alert alert-danger",
+                        attrs: { role: "alert" }
+                      },
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(_vm.errors.email[0]) +
+                            "\n          "
+                        )
+                      ]
+                    )
+                  : _vm._e()
+              ]),
               _vm._v(" "),
-              _vm._m(2),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "name" } }, [_vm._v("Phone")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.phone,
+                      expression: "phone"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.phone },
+                  attrs: {
+                    type: "text",
+                    id: "phone",
+                    "aria-describedby": "phone",
+                    placeholder: "Enter your phone",
+                    autocomplete: "phone"
+                  },
+                  domProps: { value: _vm.phone },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.phone = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.phone
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "alert alert-danger",
+                        attrs: { role: "alert" }
+                      },
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(_vm.errors.phone[0]) +
+                            "\n          "
+                        )
+                      ]
+                    )
+                  : _vm._e()
+              ]),
               _vm._v(" "),
-              _vm._m(3),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "exampleInputPassword1" } }, [
+                  _vm._v("Password")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.password,
+                      expression: "password"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.password },
+                  attrs: {
+                    type: "password",
+                    id: "exampleInputPassword1",
+                    placeholder: "Password",
+                    autocomplete: "password"
+                  },
+                  domProps: { value: _vm.password },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.password = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.password
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "alert alert-danger",
+                        attrs: { role: "alert" }
+                      },
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(_vm.errors.password[0]) +
+                            "\n          "
+                        )
+                      ]
+                    )
+                  : _vm._e()
+              ]),
               _vm._v(" "),
               _c(
                 "button",
@@ -20379,87 +20552,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          id: "name",
-          "aria-describedby": "name",
-          placeholder: "Enter your name",
-          autocomplete: "name"
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "exampleInputEmail1" } }, [
-        _vm._v("Email address")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "email",
-          id: "exampleInputEmail1",
-          "aria-describedby": "emailHelp",
-          placeholder: "Enter your email",
-          autocomplete: "email"
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "name" } }, [_vm._v("Phone")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          id: "phone",
-          "aria-describedby": "phone",
-          placeholder: "Enter your phone",
-          autocomplete: "phone"
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "exampleInputPassword1" } }, [
-        _vm._v("Password")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "password",
-          id: "exampleInputPassword1",
-          placeholder: "Password",
-          autocomplete: "password"
-        }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
