@@ -20,7 +20,12 @@ html {
               aria-describedby="name"
               placeholder="Enter your name"
               autocomplete="name"
+              v-model="name"
+              v-bind:class="{ 'is-invalid': errors.name }"
             />
+            <div class="alert alert-danger" role="alert" v-if="errors.name">
+              {{ errors.name[0] }}
+            </div>
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
@@ -31,7 +36,12 @@ html {
               aria-describedby="emailHelp"
               placeholder="Enter your email"
               autocomplete="email"
+              v-model="email"
+              v-bind:class="{ 'is-invalid': errors.email }"
             />
+            <div class="alert alert-danger" role="alert" v-if="errors.email">
+              {{ errors.email[0] }}
+            </div>
           </div>
           <div class="form-group">
             <label for="name">Phone</label>
@@ -40,91 +50,60 @@ html {
               class="form-control"
               id="phone"
               aria-describedby="phone"
+              v-bind:class="{ 'is-invalid': errors.phone }"
               placeholder="Enter your phone"
               autocomplete="phone"
+              v-model="phone"
             />
+            <div class="alert alert-danger" role="alert" v-if="errors.phone">
+              {{ errors.phone[0] }}
+            </div>
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
             <input
               type="password"
               class="form-control"
+              v-bind:class="{ 'is-invalid': errors.password }"
               id="exampleInputPassword1"
               placeholder="Password"
               autocomplete="password"
+              v-model="password"
             />
+            <div class="alert alert-danger" role="alert" v-if="errors.password">
+              {{ errors.password[0] }}
+            </div>
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
     </div>
-    <!-- <div class="d-flex flex-wrap w-full justify-item-center items-center pt-56">
-      <div class="flex flex-wrap max-w-xl">
-        <div class="p-2 text-2xl text-gray-800 font-semibold">
-          <h1>Register an account</h1>
-        </div>
-        <div class="p-2 w-full">
-          <label class="w-full" for="name">Name</label>
-          <span class="w-full text-red-500" v-if="errors.name">{{
-            errors.name[0]
-          }}</span>
-          <input
-            class="w-full bg-gray-100 rounded border border-gray-400 focus:outline-none focus:border-indigo-500 text-base px-4 py-2"
-            placeholder="Name"
-            type="text"
-            v-model="form.name"
-          />
-        </div>
-        <div class="p-2 w-full">
-          <label for="email">Your e-mail</label>
-          <input
-            class="w-full bg-gray-100 rounded border border-gray-400 focus:outline-none focus:border-indigo-500 text-base px-4 py-2"
-            placeholder="Email"
-            type="email"
-            v-model="form.email"
-          />
-        </div>
-        <div class="p-2 w-full">
-          <label for="password">Password</label>
-          <input
-            class="w-full bg-gray-100 rounded border border-gray-400 focus:outline-none focus:border-indigo-500 text-base px-4 py-2"
-            placeholder="Password"
-            type="password"
-            v-model="form.password"
-            name="password"
-          />
-        </div>
-        <div class="p-2 w-full mt-4">
-          <button
-            @click.prevent="saveForm"
-            type="submit"
-            class="flex text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-          >
-            Register
-          </button>
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      form: {
-        name: "",
-        email: "",
-        password: "",
-      },
+      name: "",
+      email: "",
+      password: "",
+      phone: "",
       errors: [],
     };
   },
   methods: {
-    saveForm() {
+    submit() {
+      this.errors = [];
       axios
-        .post("/api/register", this.form)
-        .then(() => {
-          console.log("saved");
+        .post("/api/auth/register", {
+          name: this.name,
+          email: this.email,
+          phone: this.phone,
+          password: this.password,
+        })
+        .then((resp) => {
+          localStorage.setItem("token", resp.data.meta.token);
+          this.$router.push({ name: 'home' })
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
