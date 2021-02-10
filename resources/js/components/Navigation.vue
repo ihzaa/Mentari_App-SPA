@@ -1,40 +1,123 @@
+<style>
+body {
+  min-height: 75rem;
+  padding-top: 80px;
+}
+.search {
+    width: 40%;
+}
+.search-group {
+    width: 80%;
+}
+.auth {
+    border-left:solid 1px gray;
+    padding-left: 20px;
+}
+.shopping-cart {
+    cursor: pointer;
+    margin-right: 30px;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+ .shopping-cart:hover {
+     background-color: gray;
+    border-radius: 50px;
+ }
+ .shopping-cart:hover span{
+     color: white;
+ }
+#search {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-right: 0;
+}
+#searchButton {
+    border-color: #ced4da;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-left: 0;
+}
+
+ @media only screen and (max-width: 990px) {
+body {
+  padding-top: 120px!important;
+}
+ .search {
+    width: 100%;
+}
+.search-group {
+    width: 100%;
+}
+.shopping-cart {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .shopping-cart span {
+      font-size: 18px;
+  }
+.auth {
+    border-left:0;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+    font-size: 18px;
+}
+ }
+</style>
+
 <template>
 <div>
-  <b-navbar toggleable="lg" type="light" class="bg-white" variant="info">
-    <b-navbar-brand class="" href="#"><h3><strong>Mentari</strong></h3></b-navbar-brand>
+  <b-navbar toggleable="lg" type="light" class="bg-white px-5 fixed-top" variant="info">
+    <b-navbar-brand href="#"><h1><strong>Mentari</strong></h1></b-navbar-brand>
+
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
+    <!-- <b-nav-form class="ml-4">
+          <b-form-input size="lg" class="rounded-pill" placeholder="Search"></b-form-input>
+          <b-button size="lg" class="my-2 my-md-0" type="submit"><i class="fas fa-search fa-lg"></i></b-button>
+        </b-nav-form> -->
+
+<!-- <b-nav-form> -->
+    <div class="search">
+    <b-input-group class="search-group mx-auto">
+    <b-form-input size="lg" id="search" placeholder="Search"></b-form-input>
+    <b-input-group-append>
+      <b-button id="searchButton" variant="outline-secondary"><i class="fas fa-search fa-lg"></i></b-button>
+    </b-input-group-append>
+  </b-input-group>
+  </div>
+<!-- </b-nav-form> -->
+
     <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav>
-        <b-nav-item href="#"><h4>Kategori</h4></b-nav-item>
-        <b-nav-item href="#" disabled>Disabled</b-nav-item>
-      </b-navbar-nav>
 
-      <!-- Right aligned nav items -->
-      <b-navbar-nav class="ml-auto">
-        <b-nav-form>
-          <b-form-input size="md" class="mr-md-2" placeholder="Search"></b-form-input>
-          <b-button size="md" class="my-2 my-md-0" type="submit">Search</b-button>
-        </b-nav-form>
-
-        <b-nav-item-dropdown text="Lang" right>
-          <b-dropdown-item href="#">EN</b-dropdown-item>
-          <b-dropdown-item href="#">ES</b-dropdown-item>
-          <b-dropdown-item href="#">RU</b-dropdown-item>
-          <b-dropdown-item href="#">FA</b-dropdown-item>
-        </b-nav-item-dropdown>
-
-        <b-nav-item-dropdown right>
-          <!-- Using 'button-content' slot -->
+      <b-navbar-nav class="ml-auto mr-4">
+        <b-nav-item class="shopping-cart">
+        <span>
+            <strong>Keranjang</strong>
+        </span>
+          <span class="icon">
+              <i class="fas fa-shopping-cart fa-lg"></i>
+          </span>
+          <span class="tag">0</span>
+      </b-nav-item>
+    <b-nav-item class="auth ">
+        <b-button variant="outline-secondary">Daftar</b-button>
+        <b-button class="ml-2" variant="outline-secondary">Masuk</b-button>
+    </b-nav-item>
+        <!-- <b-nav-item-dropdown right>
+          Using 'button-content' slot
           <template #button-content>
             <em>User</em>
           </template>
           <b-dropdown-item href="#">Profile</b-dropdown-item>
           <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-        </b-nav-item-dropdown>
+        </b-nav-item-dropdown> -->
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
 </div>
 </template>
+

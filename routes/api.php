@@ -21,3 +21,5 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::middleware('auth:api')->get('/user', 'Auth\AuthController@user');
+
+Route::get('/carousel', 'HomeController@getCarousel');

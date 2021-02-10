@@ -1,8 +1,8 @@
 // import Router from "./router";
 // import store from "./store";
 // import { Carousel } from "bootstrap";
-// import '@fortawesome/fontawesome-free/css/all.css'
-// import '@fortawesome/fontawesome-free/js/all.js'
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
 
 // // import "swiper/css/swiper.css";
 // /**
