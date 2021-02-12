@@ -8,9 +8,9 @@ if (!_.isEmpty(token)) {
     })
         .then(result => {
             User.data = result.data;
-            // window.user = result.data;
+            window.user = result.data;
             axios.defaults.headers.common["Authorization"] = token;
-            console.log(User);
+            console.log(window.user);
         })
         .catch(() => {
             localStorage.removeItem("token");

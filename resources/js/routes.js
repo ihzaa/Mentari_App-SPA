@@ -1,7 +1,7 @@
-import Register from "./components/Register";
-import Home from "./components/Home";
-import Login from "./components/Login";
-import Detail from "./components/Detail";
+const Home = () => import('./components/Home');
+const Login = () => import('./components/Login');
+const Register = () => import('./components/Register');
+const Detail = () => import('./components/Detail');
 
 export default {
     mode: "history",
