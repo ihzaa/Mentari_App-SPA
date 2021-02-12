@@ -81,6 +81,7 @@ html {
   </div>
 </template>
 <script>
+import User from "../user";
 export default {
   data() {
     return {
@@ -103,7 +104,8 @@ export default {
         })
         .then((resp) => {
           localStorage.setItem("token", resp.data.meta.token);
-          this.$router.push({ name: 'home' })
+          User.data = resp.data;
+          this.$router.push({ name: "home" });
         })
         .catch((error) => {
           this.errors = error.response.data.errors;

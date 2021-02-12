@@ -39,16 +39,15 @@
 // });
 
 require("./bootstrap");
+require("./authUser");
+// getUser();
 
 window.Vue = require("vue");
 
 import VueRouter from "vue-router";
 import routes from "./routes";
 import { BootstrapVue } from "bootstrap-vue";
-import { getUser } from "./authUser";
 import VueLazyload from "vue-lazyload";
-
-getUser();
 
 Vue.use(BootstrapVue);
 Vue.use(VueLazyload);
