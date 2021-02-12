@@ -1,64 +1,31 @@
+<style scoped>
+ @media only screen and (max-width: 700px) {
+     .carousel-image {
+         height: 150px;
+     }
+ }
+</style>
+
 <template>
   <div>
     <b-carousel
-      id="carousel-1"
+     id="carousel-1"
       v-model="slide"
       :interval="4000"
       controls
       indicators
-      background="#ababab"
       img-width="1024"
       img-height="350"
+      background="#ababab"
       style="text-shadow: 1px 1px 2px #333;"
       @sliding-start="onSlideStart"
-      @sliding-end="onSlideEnd"
-    >
-      <!-- Text slides with image -->
-      <!-- <b-carousel-slide v-for="carousel in carouselInfo"
-        caption="{carousel}"
-        text="carousel.description"
-        img-src="https://picsum.photos/1024/480/?image=52"
-        v-bind:key="carousel.id"
-      ></b-carousel-slide> -->
+      @sliding-end="onSlideEnd">
 
-      <!-- Slides with custom text -->
-      <b-carousel-slide style="height:500px" v-for="carosel in carouselInfo" v-bind:img-src="global.imgPath + carosel.image">
-        <h1>{{carosel.title}}</h1>
-        <p>{{carosel.description}}</p>
-      </b-carousel-slide>
-
-      <!-- Slides with image only -->
-      <!-- <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide> -->
-
-      <!-- Slides with img slot -->
-      <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
-      <!-- <b-carousel-slide>
-        <template #img>
-          <img
-            class="d-block img-fluid w-100"
-            width="1024"
-            height="400"
-            src="https://picsum.photos/1024/350/?image=55"
-            alt="image slot"
-          >
-        </template>
-      </b-carousel-slide> -->
-
-      <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-      <!-- <b-carousel-slide v-for="carousel in carouselInfo"> -->
-        <!-- <template #img>
-          <img
-            class="d-block img-fluid w-100"
-            width="1024"
-            height="400"
-            src="{{ carousel.image }}"
-            alt="image slot"
-          >
-        </template> -->
-        <!-- <p>
-          {{ carousel.description }}
-        </p> -->
-      <!-- </b-carousel-slide> -->
+        <b-carousel-slide v-for="carousel in carouselInfo" v-bind:key="carousel.id">
+            <template v-slot:img>
+                <img class="carousel-image" height="350" width="100%" v-lazy="global.imgPath+carousel.image"/>
+            </template>
+        </b-carousel-slide>
     </b-carousel>
   </div>
 </template>
@@ -76,12 +43,15 @@ import global from "../global";
         global: null
       }
     },
-    created() {
-        let uri = `/api/carousel`;
-            Axios.get(uri).then(response => {
-                this.carouselInfo = response.data.data;
-            });
-        this.global = global
+    async mounted() {
+        try{
+            let response = await Axios.get(`/api/carousel`);
+            this.carouselInfo = response.data.data;
+
+            this.global = global
+        }catch(err){
+            console.log(err)
+        }
     },
     methods: {
       onSlideStart(slide) {

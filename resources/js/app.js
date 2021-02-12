@@ -1,8 +1,7 @@
 // import Router from "./router";
 // import store from "./store";
 // import { Carousel } from "bootstrap";
-import '@fortawesome/fontawesome-free/css/all.css'
-import '@fortawesome/fontawesome-free/js/all.js'
+// import '@fortawesome/fontawesome-free/js/all.js'
 
 // // import "swiper/css/swiper.css";
 // /**
@@ -45,11 +44,16 @@ window.Vue = require("vue");
 
 import VueRouter from "vue-router";
 import routes from "./routes";
-import bootstrapVue from "bootstrap-vue";
+import { BootstrapVue } from "bootstrap-vue";
 import { getUser } from "./authUser";
+import VueLazyload from "vue-lazyload";
+
 getUser();
-Vue.use(bootstrapVue);
+
+Vue.use(BootstrapVue);
+Vue.use(VueLazyload);
 Vue.use(VueRouter);
+
 const app = new Vue({
     el: "#app",
     router: new VueRouter(routes)

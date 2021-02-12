@@ -20,7 +20,7 @@ body {
     margin-bottom: auto;
   }
  .shopping-cart:hover {
-     background-color: gray;
+     background-color: lightgreen;
     border-radius: 50px;
  }
  .shopping-cart:hover span{
@@ -75,12 +75,6 @@ body {
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-    <!-- <b-nav-form class="ml-4">
-          <b-form-input size="lg" class="rounded-pill" placeholder="Search"></b-form-input>
-          <b-button size="lg" class="my-2 my-md-0" type="submit"><i class="fas fa-search fa-lg"></i></b-button>
-        </b-nav-form> -->
-
-<!-- <b-nav-form> -->
     <div class="search">
     <b-input-group class="search-group mx-auto">
     <b-form-input size="lg" id="search" placeholder="Search"></b-form-input>
@@ -103,21 +97,36 @@ body {
           </span>
           <span class="tag">0</span>
       </b-nav-item>
-    <b-nav-item class="auth ">
-        <b-button variant="outline-secondary">Daftar</b-button>
-        <b-button class="ml-2" variant="outline-secondary">Masuk</b-button>
+    <b-nav-item class="auth" v-if="userLogin">
+        <b-button variant="outline-success">Daftar</b-button>
+        <b-button class="ml-2" variant="outline-success">Masuk</b-button>
     </b-nav-item>
-        <!-- <b-nav-item-dropdown right>
-          Using 'button-content' slot
+        <b-nav-item-dropdown right v-if="!userLogin">
           <template #button-content>
             <em>User</em>
           </template>
           <b-dropdown-item href="#">Profile</b-dropdown-item>
           <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-        </b-nav-item-dropdown> -->
+        </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
 </div>
 </template>
 
+<script>
+import '@fortawesome/fontawesome-free/css/all.css'
+import user from '../user'
+
+export default{
+    data() {
+      return {
+        userLogin: false
+      }
+    },
+    mounted(){
+        this.userLogin = window._.isEmpty(user.data)
+        console.log(this.userLogin);
+    }
+}
+</script>
