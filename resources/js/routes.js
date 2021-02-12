@@ -1,6 +1,7 @@
 import Register from "./components/Register";
 import Home from "./components/Home";
 import Login from "./components/Login";
+import Detail from "./components/Detail";
 
 export default {
     mode: "history",
@@ -24,6 +25,11 @@ export default {
             path: "/login",
             component: Login,
             name: "login"
+        },
+        {
+            path: "/detail",
+            component: Detail,
+            name: "detail"
         }
     ]
 };
