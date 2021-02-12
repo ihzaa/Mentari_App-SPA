@@ -4,6 +4,9 @@
             <Navigation />
         </header>
         <Carousel />
+        <div class="my-4">
+            <h1 align="center">Produk Kami</h1>
+        </div>
         <Product />
     </div>
 </template>

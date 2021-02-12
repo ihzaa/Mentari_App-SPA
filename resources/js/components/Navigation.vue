@@ -55,8 +55,8 @@ body {
         width: 100%;
     }
     .kategori {
-        margin-left: auto;
-        margin-right: auto;
+        margin-left: auto !important;
+        margin-right: auto !important;
         margin-top: 20px;
         position: relative;
     }
@@ -132,10 +132,16 @@ body {
                         <span class="tag">0</span>
                     </b-nav-item>
                     <b-nav-item class="authNav" v-if="userLogin">
-                        <b-button variant="outline-success">Daftar</b-button>
-                        <b-button class="ml-2" variant="outline-success"
-                            >Masuk</b-button
-                        >
+                        <router-link :to="{ name: 'register' }">
+                            <b-button class="ml-2" variant="outline-success"
+                                >Daftar</b-button
+                            >
+                        </router-link>
+                        <router-link :to="{ name: 'login' }">
+                            <b-button class="ml-2" variant="outline-success"
+                                >Masuk</b-button
+                            >
+                        </router-link>
                     </b-nav-item>
                     <b-nav-item-dropdown
                         class="userNav"
@@ -165,6 +171,7 @@ export default {
         };
     },
     mounted() {
+        require("../authUser");
         this.userLogin = window._.isEmpty(user.data);
         console.log(this.userLogin);
     }
