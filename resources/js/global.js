@@ -1,4 +1,4 @@
 export default
 {
-    imgPath: 'http://localhost:8080/mentari-app/public/storage/'
+    imgPath: 'http://localhost/mentari/mentari-app/public/storage/'
 }

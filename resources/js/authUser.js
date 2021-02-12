@@ -5,10 +5,15 @@ let token = localStorage.getItem("token");
 if (!_.isEmpty(token)) {
     Axios.get("api/user", {
         headers: { Authorization: `Bearer ${token}` }
-    }).then(result => {
-        User.data = result.data;
-        axios.defaults.headers.common["Authorization"] = token;
-        // console.log(User.data);
-    });
+    })
+        .then(result => {
+            User.data = result.data;
+            // window.user = result.data;
+            axios.defaults.headers.common["Authorization"] = token;
+            console.log(User);
+        })
+        .catch(() => {
+            localStorage.removeItem("token");
+        });
 }
 // };

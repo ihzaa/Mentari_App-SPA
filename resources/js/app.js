@@ -39,6 +39,7 @@
 // });
 
 require("./bootstrap");
+require("./authUser");
 // getUser();
 
 window.Vue = require("vue");
