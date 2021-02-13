@@ -37,19 +37,30 @@
 //     router: Router,
 //     store
 // });
-
 require("./bootstrap");
-require("./authUser");
 // getUser();
 
 window.Vue = require("vue");
 
 import VueRouter from "vue-router";
 import routes from "./routes";
-import { BootstrapVue } from "bootstrap-vue";
+import { NavbarPlugin,CarouselPlugin,CardPlugin,FormInputPlugin,LayoutPlugin, ButtonPlugin,ButtonGroupPlugin,InputGroupPlugin } from "bootstrap-vue";
 import VueLazyload from "vue-lazyload";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faShoppingCart,faSearch } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-Vue.use(BootstrapVue);
+library.add(faShoppingCart,faSearch)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.use(NavbarPlugin);
+Vue.use(CarouselPlugin);
+Vue.use(CardPlugin);
+Vue.use(LayoutPlugin);
+Vue.use(FormInputPlugin);
+Vue.use(InputGroupPlugin);
+Vue.use(ButtonGroupPlugin);
+Vue.use(ButtonPlugin);
 Vue.use(VueLazyload);
 Vue.use(VueRouter);
 

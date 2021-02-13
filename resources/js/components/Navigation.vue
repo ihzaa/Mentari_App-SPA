@@ -105,8 +105,8 @@ body {
                     ></b-form-input>
                     <b-input-group-append>
                         <b-button id="searchButton" variant="outline-secondary"
-                            ><i class="fas fa-search fa-lg"></i
-                        ></b-button>
+                            ><font-awesome-icon icon="search" />
+                        </b-button>
                     </b-input-group-append>
                 </b-input-group>
             </div>
@@ -127,7 +127,7 @@ body {
                             <strong>Keranjang</strong>
                         </span>
                         <span class="icon">
-                            <i class="fas fa-shopping-cart fa-lg"></i>
+                            <font-awesome-icon icon="shopping-cart" />
                         </span>
                         <span class="tag">0</span>
                     </b-nav-item>
@@ -143,11 +143,7 @@ body {
                             >
                         </router-link>
                     </b-nav-item>
-                    <b-nav-item-dropdown
-                        class="userNav"
-                        right
-                        v-if="!isUserEmpty"
-                    >
+                    <b-nav-item-dropdown class="userNav" right v-else>
                         <template #button-content>
                             <strong>User</strong>
                         </template>
@@ -161,7 +157,7 @@ body {
 </template>
 
 <script>
-import "@fortawesome/fontawesome-free/css/all.css";
+// import "@fortawesome/fontawesome-free/css/all.min.css";
 import user from "../user";
 
 export default {
@@ -178,17 +174,32 @@ export default {
         },
         check: function() {
             this.isUserEmpty = window._.isEmpty(user.data);
-            console.log(this.isUserEmpty);
-            console.log(user);
+            // console.log(this.isUserEmpty);
+        },
+        checkAuth() {
+            let token = localStorage.getItem("token");
+            console.log(token);
+            if (!_.isEmpty(token)) {
+                axios
+                    .get("api/user", {
+                        headers: { Authorization: `Bearer ${token}` }
+                    })
+                    .then(result => {
+                        user.data = result.data;
+                        window.user = result.data;
+                        this.isUserEmpty = false;
+                        axios.defaults.headers.common["Authorization"] = token;
+                        console.log(window.user);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        localStorage.removeItem("token");
+                    });
+            }
         }
     },
-    //   computed: {
-    //     checkLogin() {
-    //       return this.isUserEmpty = window._.isEmpty(user.data);
-    //     },
-    //   },
     mounted() {
-        this.check();
+        this.checkAuth();
     }
 };
 </script>
