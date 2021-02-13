@@ -131,7 +131,7 @@ body {
             </span>
             <span class="tag">0</span>
           </b-nav-item>
-          <b-nav-item class="authNav" v-if="isUserEmpty">
+          <b-nav-item class="authNav" v-if="check">
             <router-link :to="{ name: 'register' }">
               <b-button class="ml-2" variant="outline-success">Daftar</b-button>
             </router-link>
@@ -141,9 +141,9 @@ body {
           </b-nav-item>
           <b-nav-item-dropdown class="userNav" right v-else>
             <template #button-content>
-              <strong>User</strong>
+              <strong v-text="user.name"></strong>
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'profile' }">Profile</b-dropdown-item>
             <b-dropdown-item href="#" @click.prevent="logout"
               >Sign Out</b-dropdown-item
             >
@@ -156,42 +156,26 @@ body {
 
 <script>
 // import "@fortawesome/fontawesome-free/css/all.min.css";
-import user from "../user";
 import { logoutUser } from "../authUser";
 export default {
   data() {
     return {
-      isUserEmpty: true,
+      user: this.$parent.$parent.user.data,
     };
   },
   methods: {
-    checkAuth() {
-      let token = localStorage.getItem("token");
-      if (!_.isEmpty(token)) {
-        axios
-          .get("api/user", {
-            headers: { Authorization: `Bearer ${token}` },
-          })
-          .then((result) => {
-            user.data = result.data;
-            window.user = result.data;
-            this.isUserEmpty = false;
-            axios.defaults.headers.common["Authorization"] = token;
-            // console.log(window.user);
-          })
-          .catch((err) => {
-            localStorage.removeItem("token");
-          });
-      }
-    },
     async logout() {
       await logoutUser();
-      await this.$router.push({ name: "login" });
-    // await this.$forceUpdate();
+      //   await this.$router.push({ name: "login" });
+      // await this.$forceUpdate();
     },
   },
-  mounted() {
-    this.checkAuth();
+  computed: {
+    check() {
+      this.user = this.$parent.$parent.user.data;
+      return _.isEmpty(this.$parent.$parent.user.data);
+    },
   },
+  created() {},
 };
 </script>

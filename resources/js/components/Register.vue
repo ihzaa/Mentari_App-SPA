@@ -7,7 +7,7 @@ html {
   <div>
     <div class="container mx-auto py-2 h-100">
       <div
-        class="row d-flex justify-content-center align-items-center align-middle h-100"
+        class="row d-flex justify-content-center align-items-center align-middle h-100 px-4"
       >
         <div class="col-md-6 border p-4 shadow rounded">
           <h1 class="text-center">Register form</h1>
@@ -124,7 +124,7 @@ export default {
         })
         .then((resp) => {
           localStorage.setItem("token", resp.data.meta.token);
-          User.data = resp.data;
+          User.data = resp.data.data;
           this.$router.push({ name: "home" });
         })
         .catch((error) => {

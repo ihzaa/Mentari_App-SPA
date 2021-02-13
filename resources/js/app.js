@@ -43,16 +43,25 @@ require("./bootstrap");
 window.Vue = require("vue");
 
 import router from "./routes";
-import { NavbarPlugin,CarouselPlugin,CardPlugin,FormInputPlugin,LayoutPlugin, ButtonPlugin,ButtonGroupPlugin,InputGroupPlugin } from "bootstrap-vue";
+import {
+    NavbarPlugin,
+    CarouselPlugin,
+    CardPlugin,
+    FormInputPlugin,
+    LayoutPlugin,
+    ButtonPlugin,
+    ButtonGroupPlugin,
+    InputGroupPlugin
+} from "bootstrap-vue";
 import VueLazyload from "vue-lazyload";
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faShoppingCart,faSearch } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import App from './App.vue'
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faShoppingCart, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import App from "./App.vue";
 
-library.add(faShoppingCart,faSearch)
+library.add(faShoppingCart, faSearch);
 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.use(NavbarPlugin);
 Vue.use(CarouselPlugin);
 Vue.use(CardPlugin);
@@ -67,7 +76,33 @@ Vue.use(VueLazyload);
 //     routes:routes
 // })
 
-const app = new Vue({
-  router,
-  render: h => h(App)
-}).$mount("#app");
+
+// CEK DULU USERNYA LOGIN ATAU TIDAK BARU KE MIDDLEWARE
+import user from "./user";
+let token = localStorage.getItem("token");
+if (!_.isEmpty(token)) {
+    axios
+        .get("api/user", {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+        .then(result => {
+            user.data = result.data;
+            window.user = result.data;
+            axios.defaults.headers.common["Authorization"] = token;
+        })
+        .catch(err => {
+            localStorage.removeItem("token");
+        })
+        .finally(() => {
+            initialize();
+        });
+} else {
+    initialize();
+}
+
+function initialize() {
+    const app = new Vue({
+        router,
+        render: h => h(App)
+    }).$mount("#app");
+}
