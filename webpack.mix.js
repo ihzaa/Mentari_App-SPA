@@ -15,5 +15,5 @@ require('laravel-mix-bundle-analyzer');
 if (!mix.inProduction() && mix.isWatching()) {
    mix.bundleAnalyzer();
 };
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.sass('resources/sass/app.scss', 'public/css').js('resources/js/app.js', 'public/js')
+    ;
