@@ -38,10 +38,11 @@
         >
             <b-row class="justify-content-around" align-v="center">
                 <b-card
-                    class="product-card mb-2 p-3 mx-1"
+                    class="product-card my-2 p-3 mx-1"
                     v-for="product in productInfo"
                     v-bind:key="product.id"
                     name=""
+                    data-aos="zoom-in-up"
                 >
                     <b-card-img-lazy
                         width="100%"
@@ -81,6 +82,10 @@
 
 <script>
 import global from "../global";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+AOS.init();
 
 export default {
     data() {
