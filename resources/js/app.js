@@ -42,13 +42,13 @@ require("./bootstrap");
 
 window.Vue = require("vue");
 
-import VueRouter from "vue-router";
-import routes from "./routes";
+import router from "./routes";
 import { NavbarPlugin,CarouselPlugin,CardPlugin,FormInputPlugin,LayoutPlugin, ButtonPlugin,ButtonGroupPlugin,InputGroupPlugin } from "bootstrap-vue";
 import VueLazyload from "vue-lazyload";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingCart,faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import App from './App.vue'
 
 library.add(faShoppingCart,faSearch)
 
@@ -62,9 +62,12 @@ Vue.use(InputGroupPlugin);
 Vue.use(ButtonGroupPlugin);
 Vue.use(ButtonPlugin);
 Vue.use(VueLazyload);
-Vue.use(VueRouter);
+
+// export default new VueRouter({
+//     routes:routes
+// })
 
 const app = new Vue({
-    el: "#app",
-    router: new VueRouter(routes)
-});
+  router,
+  render: h => h(App)
+}).$mount("#app");

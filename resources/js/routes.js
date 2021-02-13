@@ -1,12 +1,14 @@
+import Vue from 'vue';
+import VueRouter from "vue-router";
+
+Vue.use(VueRouter);
+
 const Home = () => import('./components/Home');
 const Login = () => import('./components/Login');
 const Register = () => import('./components/Register');
 const Detail = () => import('./components/Detail');
 
-export default {
-    mode: "history",
-    linkActiveClass: "font-semibold",
-    routes: [
+const routes = [
         // {
         //     path: "*",
         //     component: NotFound
@@ -32,4 +34,11 @@ export default {
             name: "detail"
         }
     ]
-};
+
+const router = new VueRouter({
+    mode: "history",
+    linkActiveClass: "font-semibold",
+    routes:routes
+})
+
+export default router
