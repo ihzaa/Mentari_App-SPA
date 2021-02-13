@@ -54,14 +54,17 @@ import {
     InputGroupPlugin
 } from "bootstrap-vue";
 import VueLazyload from "vue-lazyload";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faShoppingCart, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import App from "./App.vue";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faShoppingCart,faSearch } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import App from './App.vue'
+import infiniteScroll from "vue-infinite-scroll";
 
 library.add(faShoppingCart, faSearch);
 
-Vue.component("font-awesome-icon", FontAwesomeIcon);
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.use(infiniteScroll);
 Vue.use(NavbarPlugin);
 Vue.use(CarouselPlugin);
 Vue.use(CardPlugin);
