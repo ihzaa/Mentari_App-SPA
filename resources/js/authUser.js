@@ -1,19 +1,33 @@
-import Axios from "axios";
 import User from "./user";
-// export const getUser = () => {
-let token = localStorage.getItem("token");
-if (!_.isEmpty(token)) {
-    Axios.get("api/user", {
-        headers: { Authorization: `Bearer ${token}` }
-    })
+export const getUser = () => {
+    let token = localStorage.getItem("token");
+    if (!_.isEmpty(token)) {
+        axios
+            .get("api/user", {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            .then(result => {
+                User.data = result.data;
+                window.user = result.data;
+                axios.defaults.headers.common["Authorization"] = token;
+                // console.log(window.user);
+            })
+            .catch(() => {
+                localStorage.removeItem("token");
+            });
+    }
+};
+
+export const logoutUser = () => {
+    axios
+        .get("auth/logout")
         .then(result => {
-            User.data = result.data;
-            window.user = result.data;
-            axios.defaults.headers.common["Authorization"] = token;
-            console.log(window.user);
-        })
-        .catch(() => {
             localStorage.removeItem("token");
+            User.data = null;
+            window.user = null;
+            axios.defaults.headers.common["Authorization"] = null;
+        })
+        .catch(err => {
+            console.log(err);
         });
-}
-// };
+};
