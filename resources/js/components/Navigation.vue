@@ -179,6 +179,7 @@ export default {
         check: function() {
             this.isUserEmpty = window._.isEmpty(user.data);
             console.log(this.isUserEmpty);
+            console.log(user);
         }
     },
     //   computed: {
