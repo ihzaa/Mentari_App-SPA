@@ -3,24 +3,20 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
-// const Home = () => import("./components/Home");
-// const Login = () => import("./components/Login");
-// const Register = () => import("./components/Register");
-// const Detail = () => import("./components/Detail");
-// const Profile = () => import("./components/Profile");
-// const PageNotFound = () => import("./components/PageNotFound");
-import Home from "./components/Home";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Detail from "./components/Detail";
-import Profile from "./components/Profile";
-import PageNotFound from "./components/PageNotFound";
+const Home = () => import("./components/Home");
+const Login = () => import("./components/Login");
+const Register = () => import("./components/Register");
+const Detail = () => import("./components/Detail");
+const Profile = () => import("./components/Profile");
+const PageNotFound = () => import("./components/PageNotFound");
+// import Home from "./components/Home";
+// import Login from "./components/Login";
+// import Register from "./components/Register";
+// import Detail from "./components/Detail";
+// import Profile from "./components/Profile";
+// import PageNotFound from "./components/PageNotFound";
 
 const routes = [
-    // {
-    //     path: "*",
-    //     component: NotFound
-    // },
     {
         path: "/register",
         component: Register,
