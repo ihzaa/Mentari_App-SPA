@@ -112,7 +112,6 @@ export default {
             return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         },
         loadMore() {
-            console.log("scrolling");
             this.busy = true;
             axios
                 .get("/api/product")

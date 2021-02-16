@@ -1,27 +1,34 @@
 <style>
 body {
-  min-height: 100%;
-  padding-top: 80px;
+    min-height: 100%;
+    padding-top: 80px;
 }
 
 @media only screen and (max-width: 990px) {
-  body {
-    padding-top: 80px !important;
-  }
+    body {
+        padding-top: 80px !important;
+    }
 }
 </style>
 
 <template>
-  <div>
-    <b-navbar
-      toggleable="lg"
-      type="light"
-      class="bg-white px-5 fixed-top"
-      variant="info"
-    >
-      <b-navbar-brand href="#"
-        ><h1><strong>Mentari</strong></h1>
-      </b-navbar-brand>
-    </b-navbar>
-  </div>
+    <div>
+        <b-navbar
+            toggleable="lg"
+            type="light"
+            class="bg-white px-5 fixed-top"
+            variant="info"
+        >
+            <b-navbar-brand href="#">
+                <h1><strong>Mentari</strong></h1>
+            </b-navbar-brand>
+            <b-navbar-nav class="ml-auto mr-4">
+                <b-nav-item>
+                    <router-link :to="{ name: 'home' }">
+                        <h6>Home</h6>
+                    </router-link>
+                </b-nav-item>
+            </b-navbar-nav>
+        </b-navbar>
+    </div>
 </template>

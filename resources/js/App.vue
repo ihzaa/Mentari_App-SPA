@@ -1,13 +1,18 @@
 <template>
-  <router-view></router-view>
+    <div>
+        <router-view></router-view>
+        <Footer />
+    </div>
 </template>
- <script>
+<script>
+import Footer from "./components/Footer";
 import user from "./user";
 export default {
-  data() {
-    return {
-      user: user,
-    };
-  },
+    components: { Footer },
+    data() {
+        return {
+            user: user
+        };
+    }
 };
 </script>
