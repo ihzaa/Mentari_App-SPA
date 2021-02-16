@@ -1,10 +1,13 @@
-<style scoped>
+<style>
 html {
   height: 100%;
 }
 </style>
 <template>
-  <div>
+  <div class="h-100">
+    <header>
+      <Nav />
+    </header>
     <div class="container mx-auto py-2 h-100">
       <div
         class="row d-flex justify-content-center align-items-center align-middle h-100 px-4"
@@ -97,11 +100,11 @@ html {
 </template>
 <script>
 import User from "../user";
-import Navigation from "./Navigation";
+import Nav from "./Navigation_Auth";
 
 export default {
   components: {
-    Navigation,
+    Nav,
   },
   data() {
     return {

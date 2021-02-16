@@ -1,10 +1,13 @@
-<style scoped>
+<style>
 html {
   height: 100%;
 }
 </style>
 <template>
-  <div>
+  <div class="h-100">
+    <header>
+      <Nav />
+    </header>
     <div class="container mx-auto py-2 h-100">
       <div
         class="row d-flex justify-content-center align-items-center align-middle h-100 px-4"
@@ -52,8 +55,10 @@ html {
               </div>
             </div>
             <div class="d-flex align-items-center">
-              <p class="mb-0 mr-2">Belum punya akun? </p>
-              <router-link :to="{ name: 'register' }"> Daftar Sekarang </router-link>
+              <p class="mb-0 mr-2">Belum punya akun?</p>
+              <router-link :to="{ name: 'register' }">
+                Daftar Sekarang
+              </router-link>
               <button type="submit" class="btn btn-outline-primary ml-auto">
                 Login
               </button>
@@ -66,10 +71,10 @@ html {
 </template>
 <script>
 import User from "../user";
-import Navigation from "./Navigation";
+import Nav from "./Navigation_Auth";
 export default {
   components: {
-    Navigation,
+    Nav,
   },
   data() {
     return {

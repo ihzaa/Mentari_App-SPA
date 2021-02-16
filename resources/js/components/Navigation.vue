@@ -166,8 +166,6 @@ export default {
   methods: {
     async logout() {
       await logoutUser();
-      //   await this.$router.push({ name: "login" });
-      // await this.$forceUpdate();
     },
   },
   computed: {
@@ -176,6 +174,5 @@ export default {
       return _.isEmpty(this.$parent.$parent.user.data);
     },
   },
-  created() {},
 };
 </script>
