@@ -65,6 +65,8 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    //scroll ke atas
+    window.scrollTo(0, 0)
     // mengecek ada tidak meta auth di dalam meta
     if (to.matched.some(record => record.meta.auth)) {
         // cek di localstorage auth, jika false maka diarahkan ke halaman login
