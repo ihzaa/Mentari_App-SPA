@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/{any}', 'MainController@index')->where('any', '.*');
+Route::get('/{any}', 'MainController@index')->where('any', '.*');
 
-Route::get('/{any}', function () {
-    return view('master');
-})->where('any','.*');
+// Route::get('/{any}', function () {
+//     return view('master');
+// })->where('any','.*');

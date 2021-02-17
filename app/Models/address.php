@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\transaction;
 use App\Models\customer;
 
 class address extends Model
 {
-    use HasFactory;
 
     protected $guarded = [];
 

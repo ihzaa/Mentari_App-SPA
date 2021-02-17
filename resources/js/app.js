@@ -56,12 +56,12 @@ import {
 } from "bootstrap-vue";
 import VueLazyload from "vue-lazyload";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faShoppingCart, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faShoppingCart, faSearch, faTrash, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import App from "./App.vue";
 import infiniteScroll from "vue-infinite-scroll";
 
-library.add(faShoppingCart, faSearch);
+library.add(faShoppingCart, faSearch, faTrash, faUser);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.use(infiniteScroll);
@@ -90,7 +90,7 @@ if (!_.isEmpty(token)) {
         .then(result => {
             user.data = result.data;
             window.user = result.data;
-            axios.defaults.headers.common["Authorization"] = token;
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         })
         .catch(err => {
             localStorage.removeItem("token");
