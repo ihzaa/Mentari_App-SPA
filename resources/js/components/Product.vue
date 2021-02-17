@@ -42,6 +42,7 @@
                     v-for="product in productInfo"
                     v-bind:key="product.id"
                     name=""
+                    @click="goToDetail(product.id)"
                     data-aos="zoom-in-up"
                 >
                     <b-card-img-lazy
@@ -96,27 +97,19 @@ export default {
             limit: 8
         };
     },
-    // async mounted() {
-    //     try {
-    //         let response = await Axios.get(`/api/product`);
-    //         this.productInfo = response.data.data;
-
-    //         this.global = global;
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // },
     methods: {
         formatPrice(value) {
             let val = (value / 1).toFixed(0).replace(".", ",");
             return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        },
+        goToDetail(proId) {
+            this.$router.push({ name: "detail", params: { id: proId } });
         },
         loadMore() {
             this.busy = true;
             axios
                 .get("/api/product")
                 .then(res => {
-                    // console.log(res.data);
                     const append = res.data.data.slice(
                         this.productInfo.length,
                         this.productInfo.length + this.limit

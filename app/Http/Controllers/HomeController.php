@@ -35,4 +35,17 @@ class HomeController extends Controller
             return 0;
         }
     }
+    public function getDetail()
+    {
+        $product = item::all();
+        if($product != NULL)
+        {
+            return response()->json([
+                'message' => 'success',
+                'data' => $product
+            ], 200);
+        }else{
+            return 0;
+        }
+    }
 }

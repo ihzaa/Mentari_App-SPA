@@ -22,8 +22,17 @@
             @sliding-end="onSlideEnd"
         >
             <b-carousel-slide
+                caption="Tidak ada banner"
+                img-blank
+                img-alt="Blank image"
+                style="height:350px"
+                v-if="imgCount == 0"
+            ></b-carousel-slide>
+
+            <b-carousel-slide
                 v-for="carousel in carouselInfo"
                 v-bind:key="carousel.id"
+                v-else
             >
                 <template v-slot:img>
                     <!--  -->
@@ -34,6 +43,8 @@
                         v-lazy="global.imgPath + carousel.image"
                     />
                 </template>
+                <h1>{{ carousel.title }}</h1>
+                <p>{{ carousel.description }}</p>
             </b-carousel-slide>
         </b-carousel>
     </div>
@@ -49,6 +60,7 @@ export default {
             slide: 0,
             sliding: null,
             carouselInfo: [],
+            imgCount: 0,
             global: null
         };
     },
@@ -56,6 +68,7 @@ export default {
         try {
             let response = await Axios.get(`/api/carousel`);
             this.carouselInfo = response.data.data;
+            this.imgCount = response.data.data.lenght;
 
             this.global = global;
         } catch (err) {

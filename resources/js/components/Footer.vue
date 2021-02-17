@@ -4,10 +4,9 @@
     border-top: 1px solid lightgray;
 }
 .about {
-    min-width: 500px;
+    min-width: 310px;
 }
 .contact {
-    min-width: 200px;
     border-left: 1px solid lightgray;
 }
 </style>

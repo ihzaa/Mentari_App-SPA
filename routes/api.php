@@ -24,3 +24,4 @@ Route::middleware('auth:api')->get('/user', 'Auth\AuthController@user');
 
 Route::get('/carousel', 'HomeController@getCarousel');
 Route::get('/product', 'HomeController@getProduct');
+Route::get('/detail', 'HomeController@getDetail');

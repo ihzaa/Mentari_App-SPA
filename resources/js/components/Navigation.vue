@@ -90,8 +90,8 @@ body {
             class="bg-white px-5 fixed-top"
             variant="info"
         >
-            <b-navbar-brand href="#"
-                ><h1><strong>Mentari</strong></h1>
+            <b-navbar-brand :to="{ name: 'home' }">
+                <h1><strong>Mentari</strong></h1>
             </b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
