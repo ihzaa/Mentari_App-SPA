@@ -60,6 +60,9 @@ import { faShoppingCart, faSearch, faTrash, faUser } from "@fortawesome/free-sol
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import App from "./App.vue";
 import infiniteScroll from "vue-infinite-scroll";
+import global from './global';
+window.Global = global;
+
 
 library.add(faShoppingCart, faSearch, faTrash, faUser);
 

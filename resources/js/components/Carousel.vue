@@ -39,7 +39,7 @@
                     <img
                         class="carousel-image"
                         height="350"
-                        width="100%"
+                        width="100%" 
                         v-lazy="global.imgPath + carousel.image"
                     />
                 </template>

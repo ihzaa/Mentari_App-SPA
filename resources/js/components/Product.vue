@@ -40,22 +40,34 @@
                 <b-card
                     class="product-card my-2 p-3 mx-1"
                     v-for="product in productInfo"
-                    v-bind:key="product.id"
+                    v-bind:key="product.item_id"
                     name=""
-                    @click="goToDetail(product.id)"
+                    @click="goToDetail(product.item_id)"
                     data-aos="zoom-in-up"
                 >
                     <b-card-img-lazy
                         width="100%"
                         height="200"
-                        src="https://picsum.photos/600/400/?image=25"
+                        v-if="product.path != null"
+                        v-lazy="global + product.path"
                         top
                     ></b-card-img-lazy>
-                    <b-card-header class="header text-center" tag="header"
-                        ><h5>
+                    <b-card-img-lazy
+                        width="100%"
+                        height="200"
+                        v-else
+                        src="/frontend/images/no-image-available.png"
+                        style="border:1px solid lightgray"
+                        top
+                    ></b-card-img-lazy>
+                    <b-card-header class="header text-center" tag="header">
+                        <h5>
                             <strong>{{ product.name }}</strong>
-                        </h5></b-card-header
-                    >
+                        </h5>
+                        <p style="margin-bottom:-10px;">
+                            {{ product.category_name }}
+                        </p>
+                    </b-card-header>
                     <b-card-body>
                         <b-card-text
                             class="info"
@@ -82,7 +94,6 @@
 </template>
 
 <script>
-import global from "../global";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -92,9 +103,9 @@ export default {
     data() {
         return {
             productInfo: [],
-            global: null,
             busy: false,
-            limit: 8
+            limit: 8,
+            global: window.Global.imgPath
         };
     },
     methods: {
@@ -108,7 +119,7 @@ export default {
         loadMore() {
             this.busy = true;
             axios
-                .get("/api/product")
+                .get(window.Global.baseUrl + "/api/product")
                 .then(res => {
                     const append = res.data.data.slice(
                         this.productInfo.length,
@@ -120,11 +131,13 @@ export default {
                 .catch(err => {
                     console.log(err);
                     this.busy = false;
+                })
+                .finally(() => {
+                    this.$root.$refs.Loading.hide();
                 });
         },
         created() {
             this.loadMore();
-            this.global = global;
         }
     }
 };

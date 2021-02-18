@@ -17,7 +17,7 @@ body {
                         <Slider />
                     </b-col>
                     <b-col class="productDesc" cols="7"
-                        >ini Id Produk : {{ this.$route.params.id }}</b-col
+                        >ini Id Produk : {{ detailInfo.name }}</b-col
                     >
                 </b-row>
             </b-card>
@@ -36,16 +36,16 @@ export default {
     },
     data() {
         return {
-            detailInfo: [],
-            global: null
+            detailInfo: []
         };
     },
     async mounted() {
         try {
-            let response = await Axios.get(`/api/detail`);
-            this.detailInfo = response.data.data;
-
-            this.global = global;
+            let response = await axios.get(
+                window.Global.baseUrl + `/api/detail/` + this.$route.params.id
+            );
+            console.log(response.data.data[0]);
+            this.detailInfo = response.data.data[0];
         } catch (err) {
             console.log(err);
         }
