@@ -6,6 +6,7 @@ use App\Models\address;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -60,5 +61,44 @@ class UserController extends Controller
     public function getAllAddress()
     {
         return response()->json(Auth::user()->addresses()->get(['address']));
+    }
+
+    public function editPassword(Request $request)
+    {
+        // return response()->json($request);
+        if ($request->old == "") {
+            return response([
+                'errors' => [
+                    'OldPassword' => ['Tidak Boleh Kosong']
+                ]
+            ], 422);
+        }
+        if ($request->new == "") {
+            return response([
+                'errors' => [
+                    'NewPassword' => ['Tidak Boleh Kosong']
+                ]
+            ], 422);
+        }
+        if (strlen($request->new) < 6) {
+            return response([
+                'errors' => [
+                    'NewPassword' => ['Minimal 6 Karakter']
+                ]
+            ], 422);
+        }
+        if (Hash::check($request->old, Auth::user()->password)) {
+            User::find(Auth::user()->id)->update([
+                'password' => Hash::make($request->new)
+            ]);
+
+            return response()->json(['message' => 'ok']);
+        }else{
+            return response([
+                'errors' => [
+                    'OldPassword' => ['Password Salah!']
+                ]
+            ], 422);
+        }
     }
 }

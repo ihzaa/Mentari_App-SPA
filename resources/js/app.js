@@ -76,6 +76,8 @@ Vue.use(FormInputPlugin);
 Vue.use(InputGroupPlugin);
 Vue.use(ButtonGroupPlugin);
 Vue.use(ButtonPlugin);
+import { FormPlugin } from 'bootstrap-vue'
+Vue.use(FormPlugin)
 Vue.use(VueLazyload);
 
 // export default new VueRouter({
