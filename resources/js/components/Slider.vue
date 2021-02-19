@@ -2,17 +2,21 @@
 .img-wrapper img {
     margin: auto;
     max-height: 400px;
+    border: 1px solid lightgreen;
     background-image: linear-gradient(gray 100%, transparent 0);
 }
 </style>
 <template>
     <div>
         <div class="img-wrapper">
-            <VueSlickCarousel v-bind="settings" class="w-100">
-                <div><img src="https://picsum.photos/300/300/?image=23" /></div>
-                <div><img src="https://picsum.photos/300/500/?image=25" /></div>
-                <div><img src="https://picsum.photos/400/300/?image=20" /></div>
-                <div><img src="https://picsum.photos/300/100/?image=19" /></div>
+            <VueSlickCarousel
+                v-bind="settings"
+                class="w-100"
+                v-if="detailImage.length"
+            >
+                <div v-for="detailImg in detailImage" :key="detailImg.id">
+                    <img v-lazy="global + detailImg.path" />
+                </div>
             </VueSlickCarousel>
         </div>
     </div>
@@ -28,8 +32,10 @@ export default {
     components: { VueSlickCarousel },
     data() {
         return {
+            detailImage: [],
+            global: window.Global.imgPath,
             settings: {
-                lazyLoad: "ondemand",
+                lazyLoad: "progressive",
                 arrows: true,
                 dots: true,
                 fade: true,
@@ -39,6 +45,18 @@ export default {
                 slidesToScroll: 1
             }
         };
+    },
+    async mounted() {
+        try {
+            let response = await axios.get(
+                window.Global.baseUrl +
+                    `/api/detail_image/` +
+                    this.$route.params.id
+            );
+            this.detailImage = response.data.data;
+        } catch (err) {
+            console.log(err);
+        }
     }
 };
 </script>

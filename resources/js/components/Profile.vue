@@ -1,8 +1,8 @@
 <template>
   <div>
-    <header>
+    <!-- <header>
       <Navigation />
-    </header>
+    </header> -->
     <div class="container mt-4">
       <div class="row flex-lg-nowrap">
         <div class="col-12 col-lg-auto mb-3" style="width: 200px">

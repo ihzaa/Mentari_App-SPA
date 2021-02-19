@@ -63,7 +63,6 @@ import infiniteScroll from "vue-infinite-scroll";
 import global from './global';
 window.Global = global;
 
-
 library.add(faShoppingCart, faSearch, faTrash, faUser);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

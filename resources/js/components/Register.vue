@@ -5,9 +5,9 @@ html {
 </style>
 <template>
   <div class="h-100">
-    <header>
+    <!-- <header>
       <Nav />
-    </header>
+    </header> -->
     <div class="container mx-auto my-4 py-2 h-100">
       <div
         class="row d-flex justify-content-center align-items-center align-middle h-100 px-4"
