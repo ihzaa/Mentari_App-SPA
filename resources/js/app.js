@@ -61,6 +61,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import App from "./App.vue";
 import infiniteScroll from "vue-infinite-scroll";
 import global from './global';
+import { FormPlugin } from 'bootstrap-vue'
 window.Global = global;
 
 library.add(faShoppingCart, faSearch, faTrash, faUser);
@@ -75,7 +76,6 @@ Vue.use(FormInputPlugin);
 Vue.use(InputGroupPlugin);
 Vue.use(ButtonGroupPlugin);
 Vue.use(ButtonPlugin);
-import { FormPlugin } from 'bootstrap-vue'
 Vue.use(FormPlugin)
 Vue.use(VueLazyload);
 

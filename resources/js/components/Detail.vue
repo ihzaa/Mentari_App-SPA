@@ -6,6 +6,28 @@ body {
 .slider {
     min-width: 310px;
 }
+
+@media only screen and (max-width: 700px) {
+    .detail-header {
+        flex-direction: column;
+    }
+    .detail-header h1 {
+        font-size: 22px;
+    }
+    .detail-header p,
+    .detail-body h5 {
+        font-size: 14px;
+    }
+    .detail-body h4 {
+        font-size: 18px;
+    }
+    .cart {
+        flex-direction: column;
+    }
+    .product-description {
+        padding: 30px 0 20px 0 !important;
+    }
+}
 </style>
 <template>
     <div>
@@ -15,11 +37,11 @@ body {
                     <b-col class="slider" cols="5">
                         <Slider />
                     </b-col>
-                    <b-col class="productDesc p-3" cols="7">
+                    <b-col class="product-description p-3" cols="7">
                         <div
                             class="detail-header d-flex justify-content-between"
                         >
-                            <h1>
+                            <h1 class="align-self-center">
                                 <strong>{{ detailInfo.name }}</strong>
                             </h1>
                             <p class="align-self-center">
@@ -39,11 +61,15 @@ body {
                             <div
                                 class="cart d-flex justify-content-between my-5"
                             >
-                                <h5>
+                                <h5 class="align-self-center">
                                     Stok barang :
                                     <strong>{{ detailInfo.stock }}</strong>
                                 </h5>
-                                <b-button href="#" variant="success">
+                                <b-button
+                                    href="#"
+                                    variant="success"
+                                    class="align-self-center"
+                                >
                                     Tambah Keranjang
                                     <font-awesome-icon icon="shopping-cart" />
                                 </b-button>
@@ -82,7 +108,6 @@ export default {
                 window.Global.baseUrl + `/api/detail/` + this.$route.params.id
             );
             this.detailInfo = response.data.data[0];
-            console.log(this.detailInfo);
         } catch (err) {
             console.log(err);
         }

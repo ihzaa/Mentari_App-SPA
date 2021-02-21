@@ -1,15 +1,15 @@
 <style scoped>
 .img-wrapper img {
     margin: auto;
+    width: 100%;
     max-height: 400px;
-    border: 1px solid lightgreen;
     background-image: linear-gradient(gray 100%, transparent 0);
 }
 </style>
 <template>
     <div>
         <div class="img-wrapper">
-            <VueSlickCarousel
+            <!-- <VueSlickCarousel
                 v-bind="settings"
                 class="w-100"
                 v-if="detailImage.length"
@@ -17,33 +17,53 @@
                 <div v-for="detailImg in detailImage" :key="detailImg.id">
                     <img v-lazy="global + detailImg.path" />
                 </div>
-            </VueSlickCarousel>
+            </VueSlickCarousel> -->
+            <carousel :perPage="1" v-if="imageCount != 0">
+                <slide v-for="slide in detailImage" v-bind:key="slide.id">
+                    <img :src="global + slide.path" />
+                </slide>
+            </carousel>
+            <carousel :perPage="1" v-else align="center">
+                <slide>
+                    <img
+                        width="100%"
+                        height="280"
+                        src="/frontend/images/no-image-available.png"
+                    />
+                </slide>
+            </carousel>
         </div>
     </div>
 </template>
 
 <script>
-import VueSlickCarousel from "vue-slick-carousel";
-import "vue-slick-carousel/dist/vue-slick-carousel.css";
+// import VueSlickCarousel from "vue-slick-carousel";
+// import "vue-slick-carousel/dist/vue-slick-carousel.css";
 // optional style for arrows & dots
-import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
+import { Carousel, Slide } from "vue-carousel";
+// import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 
 export default {
-    components: { VueSlickCarousel },
+    components: {
+        // VueSlickCarousel,
+        Carousel,
+        Slide
+    },
     data() {
         return {
             detailImage: [],
-            global: window.Global.imgPath,
-            settings: {
-                lazyLoad: "progressive",
-                arrows: true,
-                dots: true,
-                fade: true,
-                infinite: true,
-                speed: 100,
-                slidesToShow: 1,
-                slidesToScroll: 1
-            }
+            imageCount: 0,
+            global: window.Global.imgPath
+            // settings: {
+            //     lazyLoad: "progressive",
+            //     arrows: true,
+            //     dots: true,
+            //     fade: true,
+            //     infinite: true,
+            //     speed: 100,
+            //     slidesToShow: 1,
+            //     slidesToScroll: 1
+            // }
         };
     },
     async mounted() {
@@ -54,6 +74,8 @@ export default {
                     this.$route.params.id
             );
             this.detailImage = response.data.data;
+            this.imageCount = response.data.data.length;
+            console.log(this.imageCount);
         } catch (err) {
             console.log(err);
         }
