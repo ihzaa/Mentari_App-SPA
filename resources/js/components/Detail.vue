@@ -77,13 +77,11 @@ body {
 </template>
 
 <script>
-import Navigation from "./Navigation";
 import Slider from "./Slider";
 import User from "../user";
 
 export default {
   components: {
-    Navigation,
     Slider,
   },
   data() {

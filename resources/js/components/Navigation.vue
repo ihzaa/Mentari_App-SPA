@@ -45,40 +45,44 @@ body {
 }
 
 @media only screen and (max-width: 990px) {
-  body {
-    padding-top: 120px !important;
-  }
-  .search {
-    width: 100%;
-  }
-  .search-group {
-    width: 100%;
-  }
-  .kategori {
-    margin-left: auto !important;
-    margin-right: auto !important;
-    margin-top: 20px;
-    position: relative;
-  }
-  .kategori span {
-    font-size: 18px;
-  }
-  .shopping-cart {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  .shopping-cart span {
-    font-size: 18px;
-  }
-  .authNav {
-    border-left: 0;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 0;
-    font-size: 18px;
-  }
+    body {
+        padding-top: 120px !important;
+    }
+    .search {
+        width: 100%;
+    }
+    .search-group {
+        width: 100%;
+    }
+    .kategori {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-top: 20px;
+        position: relative;
+    }
+    .kategori span {
+        font-size: 18px;
+    }
+    .shopping-cart {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .shopping-cart span {
+        font-size: 18px;
+    }
+    .authNav {
+        border-left: 0;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 0;
+        font-size: 18px;
+    }
+    .col-7 {
+        flex-basis: 80% !important;
+        max-width: 80% !important;
+    }
 }
 </style>
 
@@ -97,82 +101,89 @@ body {
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-      <div class="search" v-if="this.$route.name === 'home'">
-        <b-input-group class="search-group mx-auto">
-          <b-form-input
-            size="lg"
-            id="search"
-            placeholder="Search"
-          ></b-form-input>
-          <b-input-group-append>
-            <b-button id="searchButton" variant="outline-secondary"
-              ><font-awesome-icon icon="search" />
-            </b-button>
-          </b-input-group-append>
-        </b-input-group>
-      </div>
-      <!-- </b-nav-form> -->
+            <div class="search" v-if="this.$route.name === 'home'">
+                <b-input-group class="search-group mx-auto">
+                    <b-form-input
+                        size="lg"
+                        id="search"
+                        placeholder="Search"
+                    ></b-form-input>
+                    <b-input-group-append>
+                        <b-button id="searchButton" variant="outline-secondary">
+                            <b-search style="width: 20px; height: 20px">
+                            </b-search>
+                        </b-button>
+                    </b-input-group-append>
+                </b-input-group>
+            </div>
+            <!-- </b-nav-form> -->
 
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav class="ml-auto mr-4">
-          <b-nav-item-dropdown
-            class="kategori"
-            right
-            v-if="this.$route.name === 'home'"
-          >
-            <template #button-content>
-              <span>
-                <strong>Kategori</strong>
-              </span>
-            </template>
-            <b-dropdown-item v-if="categoriesCount == 0">
-              Tidak ditemukan
-            </b-dropdown-item>
-            <b-dropdown-item
-              v-else
-              v-for="category in categories"
-              v-bind:key="category.id"
-            >
-              {{ category.name }}
-            </b-dropdown-item>
-          </b-nav-item-dropdown>
-          <b-nav-item class="shopping-cart">
-            <span>
-              <strong>Keranjang</strong>
-            </span>
-            <span class="icon">
-              <b-cart-check-fill
-                style="width: 20px; height: 20px"
-              ></b-cart-check-fill>
-              <!-- <font-awesome-icon icon="shopping-cart" /> -->
-            </span>
-            <span class="tag my-auto">{{ cartCounter }}</span>
-          </b-nav-item>
-          <b-nav-item class="authNav" v-if="check">
-            <router-link :to="{ name: 'register' }">
-              <b-button class="ml-2" variant="outline-success">Daftar</b-button>
-            </router-link>
-            <router-link :to="{ name: 'login' }">
-              <b-button class="ml-2" variant="outline-success">Masuk</b-button>
-            </router-link>
-          </b-nav-item>
-          <b-nav-item-dropdown class="userNav" right v-else>
-            <template #button-content>
-              <strong v-text="name"></strong>
-            </template>
-            <b-dropdown-item :to="{ name: 'profile' }">Profile</b-dropdown-item>
-            <b-dropdown-item href="#" @click.prevent="logout"
-              >Sign Out</b-dropdown-item
-            >
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
-  </div>
+            <b-collapse id="nav-collapse" is-nav>
+                <b-navbar-nav class="ml-auto mr-4">
+                    <b-nav-item-dropdown
+                        class="kategori"
+                        right
+                        v-if="this.$route.name === 'home'"
+                    >
+                        <template #button-content>
+                            <span>
+                                <strong>Kategori</strong>
+                            </span>
+                        </template>
+                        <b-dropdown-item v-if="categoriesCount == 0">
+                            Tidak ditemukan
+                        </b-dropdown-item>
+                        <b-dropdown-item
+                            v-else
+                            v-for="category in categories"
+                            v-bind:key="category.id"
+                            v-model="kategori"
+                        >
+                            {{ category.name }}
+                        </b-dropdown-item>
+                    </b-nav-item-dropdown>
+                    <b-nav-item class="shopping-cart">
+                        <span>
+                            <strong>Keranjang</strong>
+                        </span>
+                        <span class="icon">
+                            <b-cart-check-fill
+                                style="width: 20px; height: 20px;"
+                            ></b-cart-check-fill>
+                            <!-- <font-awesome-icon icon="shopping-cart" /> -->
+                        </span>
+                        <span class="tag my-auto">0</span>
+                    </b-nav-item>
+                    <b-nav-item class="authNav" v-if="check">
+                        <router-link :to="{ name: 'register' }">
+                            <b-button class="ml-2" variant="outline-success"
+                                >Daftar</b-button
+                            >
+                        </router-link>
+                        <router-link :to="{ name: 'login' }">
+                            <b-button class="ml-2" variant="outline-success"
+                                >Masuk</b-button
+                            >
+                        </router-link>
+                    </b-nav-item>
+                    <b-nav-item-dropdown class="userNav" right v-else>
+                        <template #button-content>
+                            <strong v-text="name"></strong>
+                        </template>
+                        <b-dropdown-item :to="{ name: 'profile' }"
+                            >Profile</b-dropdown-item
+                        >
+                        <b-dropdown-item href="#" @click.prevent="logout"
+                            >Sign Out</b-dropdown-item
+                        >
+                    </b-nav-item-dropdown>
+                </b-navbar-nav>
+            </b-collapse>
+        </b-navbar>
+    </div>
 </template>
 
 <script>
-// import "@fortawesome/fontawesome-free/css/all.min.css";
 import { logoutUser } from "../authUser";
 export default {
   data() {
