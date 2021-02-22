@@ -71,7 +71,11 @@ body {
                                     class="align-self-center"
                                 >
                                     Tambah Keranjang
-                                    <font-awesome-icon icon="shopping-cart" />
+                                    <b-cart-check-fill
+                                        style="width: 20px; height: 20px;"
+                                    >
+                                    </b-cart-check-fill>
+                                    <!-- <font-awesome-icon icon="shopping-cart" /> -->
                                 </b-button>
                             </div>
                         </div>
@@ -83,12 +87,10 @@ body {
 </template>
 
 <script>
-import Navigation from "./Navigation";
 import Slider from "./Slider";
 
 export default {
     components: {
-        Navigation,
         Slider
     },
     data() {

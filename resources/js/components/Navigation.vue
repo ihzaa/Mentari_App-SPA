@@ -79,6 +79,10 @@ body {
         padding-left: 0;
         font-size: 18px;
     }
+    .col-7 {
+        flex-basis: 80% !important;
+        max-width: 80% !important;
+    }
 }
 </style>
 
@@ -104,8 +108,9 @@ body {
                         placeholder="Search"
                     ></b-form-input>
                     <b-input-group-append>
-                        <b-button id="searchButton" variant="outline-secondary"
-                            ><font-awesome-icon icon="search" />
+                        <b-button id="searchButton" variant="outline-secondary">
+                            <b-search style="width: 20px; height: 20px">
+                            </b-search>
                         </b-button>
                     </b-input-group-append>
                 </b-input-group>
@@ -131,6 +136,7 @@ body {
                             v-else
                             v-for="category in categories"
                             v-bind:key="category.id"
+                            v-model="kategori"
                         >
                             {{ category.name }}
                         </b-dropdown-item>
@@ -177,7 +183,6 @@ body {
 </template>
 
 <script>
-// import "@fortawesome/fontawesome-free/css/all.min.css";
 import { logoutUser } from "../authUser";
 export default {
     data() {
@@ -185,6 +190,7 @@ export default {
             user: this.$parent.user.data,
             name: "",
             categories: [],
+            kategori: "",
             categoriesCount: 0
         };
     },
