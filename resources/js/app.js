@@ -52,22 +52,28 @@ import {
     LayoutPlugin,
     ButtonPlugin,
     ButtonGroupPlugin,
-    InputGroupPlugin
+    InputGroupPlugin,
+    BIconPersonFill,
+    BIconTrashFill,
+    BIconCartCheckFill
 } from "bootstrap-vue";
 import VueLazyload from "vue-lazyload";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faShoppingCart, faSearch, faTrash, faUser } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+// import { faShoppingCart, faSearch, faTrash, faUser } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import App from "./App.vue";
 import infiniteScroll from "vue-infinite-scroll";
 import global from './global';
 import { FormPlugin } from 'bootstrap-vue'
 window.Global = global;
 
-library.add(faShoppingCart, faSearch, faTrash, faUser);
+// library.add(faShoppingCart, faSearch, faTrash, faUser);
 
-Vue.component("font-awesome-icon", FontAwesomeIcon);
+// Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.use(infiniteScroll);
+Vue.component('b-cart-check-fill',  BIconCartCheckFill);
+Vue.component('b-person-fill',  BIconPersonFill);
+Vue.component('b-trash-fill',  BIconTrashFill);
 Vue.use(NavbarPlugin);
 Vue.use(CarouselPlugin);
 Vue.use(CardPlugin);

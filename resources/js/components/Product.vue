@@ -83,9 +83,12 @@
                         </b-card-text>
                     </b-card-body>
                     <b-card-footer class="card-footer" tag="footer">
-                        <b-button href="#" variant="success"
-                            ><font-awesome-icon icon="shopping-cart"
-                        /></b-button>
+                        <b-button href="#" variant="success">
+                            <b-cart-check-fill
+                                style="width: 20px; height: 20px"
+                            >
+                            </b-cart-check-fill>
+                        </b-button>
                     </b-card-footer>
                 </b-card>
             </b-row>
@@ -105,7 +108,8 @@ export default {
             productInfo: [],
             busy: false,
             limit: 8,
-            global: window.Global.imgPath
+            global: window.Global.imgPath,
+            selectedCategory: ""
         };
     },
     methods: {

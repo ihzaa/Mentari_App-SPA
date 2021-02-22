@@ -124,16 +124,28 @@ body {
                                 <strong>Kategori</strong>
                             </span>
                         </template>
-                        <b-dropdown-item href="#">Profile</b-dropdown-item>
+                        <b-dropdown-item v-if="categoriesCount == 0">
+                            Tidak ditemukan
+                        </b-dropdown-item>
+                        <b-dropdown-item
+                            v-else
+                            v-for="category in categories"
+                            v-bind:key="category.id"
+                        >
+                            {{ category.name }}
+                        </b-dropdown-item>
                     </b-nav-item-dropdown>
                     <b-nav-item class="shopping-cart">
                         <span>
                             <strong>Keranjang</strong>
                         </span>
                         <span class="icon">
-                            <font-awesome-icon icon="shopping-cart" />
+                            <b-cart-check-fill
+                                style="width: 20px; height: 20px;"
+                            ></b-cart-check-fill>
+                            <!-- <font-awesome-icon icon="shopping-cart" /> -->
                         </span>
-                        <span class="tag">0</span>
+                        <span class="tag my-auto">0</span>
                     </b-nav-item>
                     <b-nav-item class="authNav" v-if="check">
                         <router-link :to="{ name: 'register' }">
@@ -171,7 +183,9 @@ export default {
     data() {
         return {
             user: this.$parent.user.data,
-            name: ""
+            name: "",
+            categories: [],
+            categoriesCount: 0
         };
     },
     methods: {
@@ -185,10 +199,22 @@ export default {
                     .slice(0, 2)
                     .join(" ");
             }
+        },
+        async category() {
+            try {
+                let response = await axios.get(
+                    window.Global.baseUrl + `/api/category`
+                );
+                this.categories = response.data.data;
+                this.categoriesCount = response.data.data.length;
+            } catch (err) {
+                console.log(err);
+            }
         }
     },
     mounted() {
         this.splitName();
+        this.category();
     },
     computed: {
         check() {
