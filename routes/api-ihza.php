@@ -8,4 +8,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('edit/password','UserController@editPassword');
 
     Route::get('get/address','UserController@getAllAddress');
+
+    Route::get('add/to/cart/{id}','ItemController@addToCart');
+    Route::get('get/cart/count','ItemController@getCountCartItem');
 });

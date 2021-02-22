@@ -14,7 +14,7 @@
         position: fixed;
         height: 100%;
         width: 100%;
-        z-index: 5000;
+        z-index: 4999;
         top: 0;
         left: 0;
         float: left;
