@@ -401,7 +401,7 @@ export default {
     },
     getAddresses() {
       axios
-        .get(window.Global.basePath + "/api/get/address")
+        .get(window.Global.baseUrl + "/api/get/address")
         .then((result) => {
           this.addresses = result.data;
         })
@@ -414,7 +414,7 @@ export default {
       this.resetErrors();
       this.$root.$refs.Loading.show();
       axios
-        .post(window.Global.basePath + "/api/edit/profile", {
+        .post(window.Global.baseUrl + "/api/edit/profile", {
           name: this.name,
           email: this.email,
           phone: this.phone,
@@ -441,7 +441,7 @@ export default {
       this.successEditAlamat = false;
       this.$root.$refs.Loading.show();
       axios
-        .post(window.Global.basePath + "/api/edit/address", {
+        .post(window.Global.baseUrl + "/api/edit/address", {
           addresses: this.addresses,
         })
         .then((resp) => {
