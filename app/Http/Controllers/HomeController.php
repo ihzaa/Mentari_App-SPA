@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\poster;
 use App\Models\item;
+use App\Models\category;
 use App\Models\item_image;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -62,6 +63,19 @@ class HomeController extends Controller
             return response()->json([
                 'message' => 'success',
                 'data' => $img
+            ], 200);
+        }else{
+            return 0;
+        }
+    }
+    public function getCategory()
+    {
+        $category = category::get(['id','name']);
+        if($category != NULL)
+        {
+            return response()->json([
+                'message' => 'success',
+                'data' => $category
             ], 200);
         }else{
             return 0;
