@@ -33,9 +33,18 @@ body {
     color: white;
 }
 #search {
+    border-color: lightgrey;
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
     border-right: 0;
+}
+#search:focus {
+    border-left-color: lightgrey;
+    border-top-color: lightgrey;
+    border-bottom-color: lightgrey;
+    border-right-color: none;
+    box-shadow: none !important;
+    outline: none !important;
 }
 #searchButton {
     border-color: #ced4da;
@@ -107,8 +116,7 @@ body {
                         size="lg"
                         id="search"
                         placeholder="Search"
-                        v-model="value"
-                        @submit="emitSearchValue"
+                        v-model="searchValue"
                     >
                     </b-form-input>
                     <b-input-group-append>
@@ -137,13 +145,21 @@ body {
                                 <strong>Kategori</strong>
                             </span>
                         </template>
-                        <b-dropdown-item v-if="categoriesCount == 0">
+                        <b-dropdown-item
+                            v-model="categoryValue"
+                            @click="emitCategoryValue(null)"
+                        >
+                            Semua Produk
+                        </b-dropdown-item>
+                        <b-dropdown-item v-if="categoriesCount == 0" disabled>
                             Tidak ditemukan
                         </b-dropdown-item>
                         <b-dropdown-item
                             v-else
                             v-for="category in categories"
                             v-bind:key="category.id"
+                            v-model="categoryValue"
+                            @click="emitCategoryValue(category.id)"
                         >
                             {{ category.name }}
                         </b-dropdown-item>
@@ -200,7 +216,8 @@ export default {
             categories: [],
             categoriesCount: 0,
             cartCounter: 0,
-            value: ""
+            searchValue: "",
+            categoryValue: ""
         };
     },
     methods: {
@@ -237,8 +254,13 @@ export default {
             }
         },
         emitSearchValue() {
-            EventBus.$emit("search-value", this.value);
-            // console.log(this.value);
+            EventBus.$emit("search-value", this.searchValue);
+        },
+        emitCategoryValue(id) {
+            EventBus.$emit("category-value", id);
+        },
+        kategori(input) {
+            this.categoryValue = input;
         }
     },
     mounted() {

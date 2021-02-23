@@ -9,6 +9,8 @@ use App\Models\category;
 use App\Models\item_image;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class HomeController extends Controller
 {
@@ -25,10 +27,16 @@ class HomeController extends Controller
             return 0;
         }
     }
-    public function getProduct()
+    public function getProduct(Request $request)
     {
-        $product = DB::select(DB::raw('SELECT items.id AS item_id,items.name,items.price,items.description,items.stock,categories.id AS category_id, categories.name AS category_name, (SELECT item_images.path FROM item_images WHERE item_images.item_id = items.id ORDER BY item_images.id LIMIT 1) AS path FROM items JOIN categories ON items.category_id = categories.id ORDER BY items.updated_at DESC'));
+        if($request->search == "undefined" && $request->category == "undefined"){
+            $product = DB::select(DB::raw('SELECT items.id AS item_id,items.name,items.price,items.description,items.stock,categories.id AS category_id, categories.name AS category_name, (SELECT item_images.path FROM item_images WHERE item_images.item_id = items.id ORDER BY item_images.id LIMIT 1) AS path FROM items JOIN categories ON items.category_id = categories.id ORDER BY items.updated_at DESC '));
+        }else if($request->sea){
 
+        }
+        $product = $this->paginateArray(DB::select(DB::raw('SELECT items.id AS item_id,items.name,items.price,items.description,items.stock,categories.id AS category_id, categories.name AS category_name, (SELECT item_images.path FROM item_images WHERE item_images.item_id = items.id ORDER BY item_images.id LIMIT 1) AS path FROM items JOIN categories ON items.category_id = categories.id ORDER BY items.updated_at DESC')));
+
+        // dd($product);
         if($product != NULL)
         {
             return response()->json([
@@ -76,6 +84,38 @@ class HomeController extends Controller
             return response()->json([
                 'message' => 'success',
                 'data' => $category
+            ], 200);
+        }else{
+            return 0;
+        }
+    }
+
+     public function paginateArray($data, $perPage = 15)
+    {
+        $page = Paginator::resolveCurrentPage();
+        $total = count($data);
+        $results = array_slice($data, ($page - 1) * $perPage, $perPage);
+
+        return new LengthAwarePaginator($results, $total, $perPage, $page, [
+            'path' => Paginator::resolveCurrentPath(),
+        ]);
+    }
+
+    public function getProductName(Request $request)
+    {
+        if($request->name == 'undefined'){
+           return $this->getProduct();
+        }else{
+            $product = DB::select(DB::raw('SELECT items.id AS item_id,items.name,items.price,items.description,items.stock,categories.id AS category_id, categories.name AS category_name, (SELECT item_images.path FROM item_images WHERE item_images.item_id = items.id ORDER BY item_images.id LIMIT 1) AS path FROM items JOIN categories ON items.category_id = categories.id WHERE items.name LIKE "%'.$request->name.'%" ORDER BY items.updated_at DESC'));
+        };
+
+
+        // dd($product);
+        if($product != NULL)
+        {
+            return response()->json([
+                'message' => 'success',
+                'data' => $product
             ], 200);
         }else{
             return 0;

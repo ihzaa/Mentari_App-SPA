@@ -31,70 +31,77 @@
 
 <template>
     <div class="mx-5 my-3">
-        <div
-            v-infinite-scroll="loadMore"
-            infinite-scroll-disabled="busy"
-            infinite-scroll-distance="limit"
-        >
-            <b-row class="justify-content-around" align-v="center">
-                <b-card
-                    class="product-card my-2 p-3 mx-1"
-                    v-for="product in filteredProduct"
-                    @click="goToDetail(product.item_id)"
-                    v-bind:key="product.item_id"
-                    name=""
-                    data-aos="zoom-in-up"
-                >
-                    <b-card-img-lazy
-                        width="100%"
-                        height="200"
-                        v-if="product.path != null"
-                        v-lazy="global + product.path"
-                        top
-                    ></b-card-img-lazy>
-                    <b-card-img-lazy
-                        width="100%"
-                        height="200"
-                        v-else
-                        src="/frontend/images/no-image-available.png"
-                        style="border: 1px solid lightgray"
-                        top
-                    ></b-card-img-lazy>
-                    <b-card-header class="header text-center" tag="header">
-                        <h5>
-                            <strong>{{ product.name }}</strong>
-                        </h5>
-                        <p style="margin-bottom: -10px">
-                            {{ product.category_name }}
-                        </p>
-                    </b-card-header>
-                    <b-card-body>
-                        <b-card-text
-                            class="info"
-                            v-if="product.description.length < 180"
-                        >
-                            {{ product.description }}
-                        </b-card-text>
-                        <b-card-text class="info" v-else>
-                            {{ product.description.substring(0, 180) + "..." }}
-                        </b-card-text>
-                        <b-card-text class="harga text-right">
-                            <p>Rp. {{ formatPrice(product.price) }}</p>
-                        </b-card-text>
-                    </b-card-body>
-                    <b-card-footer class="card-footer" tag="footer">
-                        <b-button
-                            @click.stop="addToCart(product.item_id)"
-                            variant="success"
-                        >
-                            <b-cart-check-fill
-                                style="width: 20px; height: 20px"
-                            >
-                            </b-cart-check-fill>
-                        </b-button>
-                    </b-card-footer>
-                </b-card>
-            </b-row>
+        <b-row class="justify-content-around" align-v="center">
+            <b-card
+                class="product-card my-2 p-3 mx-1"
+                v-for="product in productInfo"
+                @click="goToDetail(product.item_id)"
+                v-bind:key="product.item_id"
+                name=""
+                data-aos="zoom-in-up"
+            >
+                <b-card-img-lazy
+                    width="100%"
+                    height="200"
+                    v-if="product.path != null"
+                    v-lazy="global + product.path"
+                    top
+                ></b-card-img-lazy>
+                <b-card-img-lazy
+                    width="100%"
+                    height="200"
+                    v-else
+                    src="/frontend/images/no-image-available.png"
+                    style="border: 1px solid lightgray"
+                    top
+                ></b-card-img-lazy>
+                <b-card-header class="header text-center" tag="header">
+                    <h5>
+                        <strong>{{ product.name }}</strong>
+                    </h5>
+                    <p style="margin-bottom: -10px">
+                        {{ product.category_name }}
+                    </p>
+                </b-card-header>
+                <b-card-body>
+                    <b-card-text
+                        class="info"
+                        v-if="product.description.length < 180"
+                    >
+                        {{ product.description }}
+                    </b-card-text>
+                    <b-card-text class="info" v-else>
+                        {{ product.description.substring(0, 180) + "..." }}
+                    </b-card-text>
+                    <b-card-text class="harga text-right">
+                        <p>Rp. {{ formatPrice(product.price) }}</p>
+                    </b-card-text>
+                </b-card-body>
+                <b-card-footer class="card-footer" tag="footer">
+                    <b-button
+                        @click.stop="addToCart(product.item_id)"
+                        variant="success"
+                    >
+                        <b-cart-check-fill style="width: 20px; height: 20px">
+                        </b-cart-check-fill>
+                    </b-button>
+                </b-card-footer>
+            </b-card>
+        </b-row>
+        <div class="text-center my-4" v-show="moreExists">
+            <b-button variant="success" @click="loadMore" v-if="!loading">
+                Tampilkan Lebih Banyak
+            </b-button>
+            <b-button
+                variant="success"
+                style="font-size:16px"
+                disabled
+                align-v="center"
+                v-else
+            >
+                <b-spinner small></b-spinner>
+                Loading...
+            </b-button>
         </div>
     </div>
 </template>
@@ -111,11 +118,15 @@ export default {
     data() {
         return {
             searchvalue: "",
+            categoryvalue: "",
             productInfo: [],
             busy: false,
             limit: 8,
             global: window.Global.imgPath,
-            selectedCategory: ""
+            moreExists: true,
+            nextPage: 0,
+            loading: false,
+            searchProduct: false
         };
     },
     methods: {
@@ -126,28 +137,26 @@ export default {
         goToDetail(proId) {
             this.$router.push({ name: "detail", params: { id: proId } });
         },
-        loadMore() {
-            this.busy = true;
-            axios
-                .get(window.Global.baseUrl + "/api/product")
-                .then(res => {
-                    const append = res.data.data.slice(
-                        this.productInfo.length,
-                        this.productInfo.length + this.limit
-                    );
-                    this.productInfo = this.productInfo.concat(append);
-                    this.busy = false;
-                })
-                .catch(err => {
-                    console.log(err);
-                    this.busy = false;
-                })
-                .finally(() => {
-                    this.$root.$refs.Loading.hide();
+        loadProduct: async function() {
+            try {
+                let response = await axios.post(`/api/product`, {
+                    search: this.searchvalue,
+                    category: this.categoryvalue
                 });
-        },
-        created() {
-            this.loadMore();
+                this.productInfo = response.data.data.data;
+
+                // if (
+                //     response.data.data.current_page <
+                //     response.data.data.last_page
+                // ) {
+                //     this.moreExists = true;
+                //     this.nextPage = response.data.data.current_page + 1;
+                // } else {
+                //     this.moreExists = false;
+                // }
+            } catch (err) {
+                console.log(err);
+            }
         },
         addToCart(id) {
             if (_.isEmpty(User.data)) {
@@ -167,19 +176,61 @@ export default {
                         this.$root.$refs.Loading.hide();
                     });
             }
-        }
-    },
-    computed: {
+        },
+        loadMore: async function() {
+            this.loading = true;
+            await axios
+                .get(`/api/product?page=` + this.nextPage)
+                .then(response => {
+                    console.log(response);
+
+                    response.data.data.data.forEach(data => {
+                        this.productInfo.push(data);
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+        },
         filteredProduct() {
-            return this.productInfo.filter(item =>
-                item.name.toLowerCase().includes(this.searchvalue.toLowerCase())
-            );
+            this.searchProduct = true;
+            axios
+                .get(`/api/search?name=` + this.seachvalue)
+                .then(response => {
+                    if (
+                        response.data.data.current_page <
+                        response.data.data.last_page
+                    ) {
+                        this.moreExists = true;
+                        this.nextPage = response.data.data.current_page + 1;
+                    } else {
+                        this.moreExists = false;
+                    }
+
+                    response.data.data.data.forEach(data => {
+                        this.productInfo.push(data);
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+                .finally(() => {
+                    this.searchProduct = false;
+                });
         }
     },
+    computed: {},
     created() {
         EventBus.$on("search-value", value => {
             this.searchvalue = value;
         });
+        EventBus.$on("category-value", value => {
+            this.categoryvalue = value;
+        });
+        this.loadMore();
     }
 };
 </script>

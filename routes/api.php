@@ -23,7 +23,8 @@ Route::group(['prefix' => 'auth'], function () {
 Route::middleware('auth:api')->get('/user', 'Auth\AuthController@user');
 
 Route::get('/carousel', 'HomeController@getCarousel');
-Route::get('/product', 'HomeController@getProduct');
+Route::post('/product', 'HomeController@getProduct');
 Route::get('/detail/{id}', 'HomeController@getDetail');
 Route::get('/category', 'HomeController@getCategory');
 Route::get('/detail_image/{id}', 'HomeController@getDetailImage');
+Route::get('/search', 'HomeController@getProductName');
