@@ -6,6 +6,7 @@ use App\Models\cart;
 use App\Models\item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
@@ -37,5 +38,28 @@ class ItemController extends Controller
                 return response()->json(cart::where('user_id', $user->id)->where('status', '0')->count());
             }
         }
+    }
+
+    public function getCartItem()
+    {
+        return response()->json(DB::select(DB::raw('SELECT c.id as "cart_id",i.id as "item_id",c.quantity, i.name, i.price, (SELECT item_images.path FROM item_images WHERE item_images.item_id = i.id LIMIT 1) as img FROM carts as c JOIN items as i ON c.item_id=i.id WHERE c.user_id="' . Auth::user()->id . '" AND c.status="0"')));
+    }
+
+    public function deleteItemInCart(Request $request)
+    {
+        $cart = cart::find($request->id);
+        if ($cart != []) {
+            $cart->delete();
+            return response()->json("ok");
+        }
+        return response('', 442, []);
+    }
+
+    public function changeQuantity(Request $request)
+    {
+        cart::find($request->id)->update([
+            'quantity' => $request->quantity
+        ]);
+        return response()->json("ok");
     }
 }

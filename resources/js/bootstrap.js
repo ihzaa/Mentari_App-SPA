@@ -41,7 +41,8 @@ try {
 // //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 // //     forceTLS: true
 // // });
-window._ = require("lodash");
+window._ = {};
+window._.isEmpty = require('lodash.isempty');
 
 window.axios = require("axios");
 
