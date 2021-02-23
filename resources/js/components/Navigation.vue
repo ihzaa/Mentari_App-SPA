@@ -1,47 +1,47 @@
 <style>
 body {
-  min-height: 100%;
-  padding-top: 80px;
+    min-height: 100%;
+    padding-top: 80px;
 }
 .search {
-  width: 30%;
+    width: 30%;
 }
 .search-group {
-  width: 90%;
+    width: 90%;
 }
 .authNav {
-  border-left: solid 1px gray;
-  padding-left: 20px;
+    border-left: solid 1px gray;
+    padding-left: 20px;
 }
 .kategori {
-  cursor: pointer;
-  margin-right: 30px;
-  margin-top: auto;
-  margin-bottom: auto;
+    cursor: pointer;
+    margin-right: 30px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 .shopping-cart {
-  cursor: pointer;
-  margin-right: 30px;
-  margin-top: auto;
-  margin-bottom: auto;
+    cursor: pointer;
+    margin-right: 30px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 .shopping-cart:hover {
-  background-color: lightgreen;
-  border-radius: 50px;
+    background-color: lightgreen;
+    border-radius: 50px;
 }
 .shopping-cart:hover span {
-  color: white;
+    color: white;
 }
 #search {
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
-  border-right: 0;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-right: 0;
 }
 #searchButton {
-  border-color: #ced4da;
-  border-top-right-radius: 30px;
-  border-bottom-right-radius: 30px;
-  border-left: 0;
+    border-color: #ced4da;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-left: 0;
 }
 
 @media only screen and (max-width: 990px) {
@@ -87,19 +87,19 @@ body {
 </style>
 
 <template>
-  <div>
-    <b-navbar
-      toggleable="lg"
-      type="light"
-      class="bg-white px-5 fixed-top"
-      variant="info"
-      style="z-index: 5000"
-    >
-      <b-navbar-brand :to="{ name: 'home' }">
-        <h1><strong>Mentari</strong></h1>
-      </b-navbar-brand>
+    <div>
+        <b-navbar
+            toggleable="lg"
+            type="light"
+            class="bg-white px-5 fixed-top"
+            variant="info"
+            style="z-index: 5000"
+        >
+            <b-navbar-brand :to="{ name: 'home' }">
+                <h1><strong>Mentari</strong></h1>
+            </b-navbar-brand>
 
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
             <div class="search" v-if="this.$route.name === 'home'">
                 <b-input-group class="search-group mx-auto">
@@ -107,9 +107,16 @@ body {
                         size="lg"
                         id="search"
                         placeholder="Search"
-                    ></b-form-input>
+                        v-model="value"
+                        @submit="emitSearchValue"
+                    >
+                    </b-form-input>
                     <b-input-group-append>
-                        <b-button id="searchButton" variant="outline-secondary">
+                        <b-button
+                            id="searchButton"
+                            variant="outline-success"
+                            @click="emitSearchValue"
+                        >
                             <b-search style="width: 20px; height: 20px">
                             </b-search>
                         </b-button>
@@ -137,7 +144,6 @@ body {
                             v-else
                             v-for="category in categories"
                             v-bind:key="category.id"
-                            v-model="kategori"
                         >
                             {{ category.name }}
                         </b-dropdown-item>
@@ -150,7 +156,6 @@ body {
                             <b-cart-check-fill
                                 style="width: 20px; height: 20px;"
                             ></b-cart-check-fill>
-                            <!-- <font-awesome-icon icon="shopping-cart" /> -->
                         </span>
                         <span class="tag my-auto">0</span>
                     </b-nav-item>
@@ -185,59 +190,71 @@ body {
 
 <script>
 import { logoutUser } from "../authUser";
+import { EventBus } from "../event-bus";
+
 export default {
-  data() {
-    return {
-      user: this.$parent.user.data,
-      name: "",
-      categories: [],
-      categoriesCount: 0,
-      cartCounter: 0,
-    };
-  },
-  methods: {
-    async logout() {
-      await logoutUser();
+    data() {
+        return {
+            user: this.$parent.user.data,
+            name: "",
+            categories: [],
+            categoriesCount: 0,
+            cartCounter: 0,
+            value: ""
+        };
     },
-    splitName() {
-      if (!_.isEmpty(this.user)) {
-        this.name = this.user.name.split(" ").slice(0, 2).join(" ");
-      }
+    methods: {
+        async logout() {
+            await logoutUser();
+        },
+        splitName() {
+            if (!_.isEmpty(this.user)) {
+                this.name = this.user.name
+                    .split(" ")
+                    .slice(0, 2)
+                    .join(" ");
+            }
+        },
+        async category() {
+            try {
+                let response = await axios.get(
+                    window.Global.baseUrl + `/api/category`
+                );
+                this.categories = response.data.data;
+                this.categoriesCount = response.data.data.length;
+            } catch (err) {
+                console.log(err);
+            }
+        },
+        async getCartCount() {
+            if (!_.isEmpty(this.user)) {
+                axios
+                    .get(window.Global.baseUrl + "/api/get/cart/count")
+                    .then(resp => {
+                        this.cartCounter = resp.data;
+                    })
+                    .catch(err => console.log(err));
+            }
+        },
+        emitSearchValue() {
+            EventBus.$emit("search-value", this.value);
+            // console.log(this.value);
+        }
     },
-    async category() {
-      try {
-        let response = await axios.get(window.Global.baseUrl + `/api/category`);
-        this.categories = response.data.data;
-        this.categoriesCount = response.data.data.length;
-      } catch (err) {
-        console.log(err);
-      }
+    mounted() {
+        this.splitName();
+        this.category();
+        this.getCartCount();
     },
-    async getCartCount() {
-      if (!_.isEmpty(this.user)) {
-        axios
-          .get(window.Global.baseUrl + "/api/get/cart/count")
-          .then((resp) => {
-            this.cartCounter = resp.data;
-          })
-          .catch((err) => console.log(err));
-      }
+    computed: {
+        check() {
+            this.user = this.$parent.user.data;
+            this.splitName();
+            return _.isEmpty(this.$parent.user.data);
+        }
     },
-  },
-  mounted() {
-    this.splitName();
-    this.category();
-    this.getCartCount();
-  },
-  computed: {
-    check() {
-      this.user = this.$parent.user.data;
-      this.splitName();
-      return _.isEmpty(this.$parent.user.data);
-    },
-  },
-  created() {
-    this.$root.$refs.Nav = this;
-  },
+    created() {
+        this.$root.$refs.Nav = this;
+    }
 };
 </script>
