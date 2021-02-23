@@ -42,7 +42,7 @@ try {
 // //     forceTLS: true
 // // });
 window._ = {};
-window._.isEmpty = require('lodash.isempty');
+window._.isEmpty = require('lodash/isempty');
 
 window.axios = require("axios");
 
