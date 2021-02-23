@@ -9,6 +9,7 @@ const Register = () => import("./components/Register");
 const Detail = () => import("./components/Detail");
 const Profile = () => import("./components/Profile");
 const PageNotFound = () => import("./components/PageNotFound");
+const Cart = () => import("./components/Cart");
 // import Home from "./components/Home";
 // import Login from "./components/Login";
 // import Register from "./components/Register";
@@ -55,6 +56,14 @@ const routes = [
         path: "*",
         name: "notfound",
         component: PageNotFound
+    },
+    {
+        path: "/cart",
+        component: Cart,
+        name: "cart",
+        meta: {
+            auth: true
+        }
     }
 ];
 
@@ -66,7 +75,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     //scroll ke atas
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     // mengecek ada tidak meta auth di dalam meta
     if (to.matched.some(record => record.meta.auth)) {
         // cek di localstorage auth, jika false maka diarahkan ke halaman login

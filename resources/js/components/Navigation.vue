@@ -164,7 +164,7 @@ body {
                             {{ category.name }}
                         </b-dropdown-item>
                     </b-nav-item-dropdown>
-                    <b-nav-item class="shopping-cart">
+                    <b-nav-item class="shopping-cart" :to="{ name: 'cart' }">
                         <span>
                             <strong>Keranjang</strong>
                         </span>
@@ -173,7 +173,7 @@ body {
                                 style="width: 20px; height: 20px;"
                             ></b-cart-check-fill>
                         </span>
-                        <span class="tag my-auto">0</span>
+                        <span class="tag my-auto">{{cartCounter}}</span>
                     </b-nav-item>
                     <b-nav-item class="authNav" v-if="check">
                         <router-link :to="{ name: 'register' }">
