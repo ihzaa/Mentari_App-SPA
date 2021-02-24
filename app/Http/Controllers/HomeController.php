@@ -50,9 +50,9 @@ class HomeController extends Controller
             ], 200);
         }
     }
-    public function getDetail($id)
+    public function getDetail(Request $request)
     {
-        $product = DB::select(DB::raw('SELECT items.id AS item_id,items.name,items.price,items.description,items.stock, categories.name AS category_name FROM items JOIN categories ON items.category_id = categories.id WHERE items.id = ' . $id));
+        $product = DB::select(DB::raw('SELECT items.id AS item_id,items.name,items.price,items.description,items.stock, categories.name AS category_name FROM items JOIN categories ON items.category_id = categories.id WHERE items.id = ' . $request->id));
 
         if ($product != NULL) {
             return response()->json([

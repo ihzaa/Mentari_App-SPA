@@ -96,8 +96,7 @@ export default {
     data() {
         return {
             detailInfo: [],
-            id: this.$route.params.id,
-            loading: false
+            id: this.$route.query.id
         };
     },
     methods: {
@@ -120,17 +119,17 @@ export default {
                         console.log(err);
                     })
                     .finally(() => {
-                        this.loading = false;
+                        this.$root.$refs.Loading.hide();
                     });
             }
         }
     },
-    async mounted() {
-        console.log(User);
-        this.loading = true;
-        await axios
-            .get(window.Global.baseUrl + `/api/detail/` + this.$route.params.id)
+    mounted() {
+        this.$root.$refs.Loading.show();
+        axios
+            .post(window.Global.baseUrl + `/api/detail`, { id: this.id })
             .then(response => {
+                console.log(response);
                 if (response.data != 0) {
                     this.detailInfo = response.data.data[0];
                 } else {

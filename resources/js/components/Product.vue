@@ -81,7 +81,12 @@
                     <b-button
                         @click.stop="addToCart(product.item_id)"
                         variant="success"
+                        v-if="product.stock != 0"
                     >
+                        <b-cart-check-fill style="width: 20px; height: 20px">
+                        </b-cart-check-fill>
+                    </b-button>
+                    <b-button @click.stop="" variant="success" v-else disabled>
                         <b-cart-check-fill style="width: 20px; height: 20px">
                         </b-cart-check-fill>
                     </b-button>
@@ -120,11 +125,8 @@ export default {
             searchvalue: "",
             categoryvalue: "",
             productInfo: [],
-            busy: false,
-            limit: 8,
             global: window.Global.imgPath,
             moreExists: true,
-            nextPage: 0,
             loading: false,
             searchProduct: false,
             lastProductId: 0
@@ -136,7 +138,7 @@ export default {
             return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         },
         goToDetail(proId) {
-            this.$router.push({ name: "detail", params: { id: proId } });
+            this.$router.push({ name: "detail", query: { id: proId } });
         },
         loadProduct: async function() {
             try {

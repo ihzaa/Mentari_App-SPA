@@ -61,7 +61,6 @@ export default {
             );
             this.detailImage = response.data.data;
             this.imageCount = response.data.data.length;
-            console.log(this.imageCount);
         } catch (err) {
             console.log(err);
         }
