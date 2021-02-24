@@ -61,12 +61,13 @@ import {
 } from "bootstrap-vue";
 import VueLazyload from "vue-lazyload";
 import App from "./App.vue";
-import infiniteScroll from "vue-infinite-scroll";
 import global from './global';
 import { FormPlugin } from 'bootstrap-vue'
+import Skeleton from 'vue-loading-skeleton';
+
 window.Global = global;
 
-Vue.use(infiniteScroll);
+Vue.use(Skeleton);
 Vue.component('b-spinner', BSpinner)
 Vue.component('b-cart-check-fill',  BIconCartCheckFill);
 Vue.component('b-person-fill',  BIconPersonFill);

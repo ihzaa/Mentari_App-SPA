@@ -35,7 +35,6 @@
                 v-else
             >
                 <template v-slot:img>
-                    <!--  -->
                     <img
                         class="carousel-image"
                         height="350"
