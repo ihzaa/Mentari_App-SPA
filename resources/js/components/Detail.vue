@@ -61,14 +61,34 @@ body {
                             <div
                                 class="cart d-flex justify-content-between my-5"
                             >
-                                <h5 class="align-self-center">
-                                    Stok barang :
+                                <h5
+                                    class="align-self-center"
+                                    v-if="detailInfo.stock != 0"
+                                >
+                                    Persediaan barang :
                                     <strong>{{ detailInfo.stock }}</strong>
+                                </h5>
+                                <h5 class="align-self-center" v-else>
+                                    Persediaan barang :
+                                    <strong class="text-danger">Kosong</strong>
                                 </h5>
                                 <b-button
                                     @click="addToCart(id)"
                                     variant="success"
                                     class="align-self-center"
+                                    v-if="detailInfo.stock != 0"
+                                >
+                                    Tambah Keranjang
+                                    <b-cart-check-fill
+                                        style="width: 20px; height: 20px"
+                                    >
+                                    </b-cart-check-fill>
+                                </b-button>
+                                <b-button
+                                    variant="secondary"
+                                    class="align-self-center"
+                                    v-else
+                                    disabled
                                 >
                                     Tambah Keranjang
                                     <b-cart-check-fill
@@ -129,7 +149,6 @@ export default {
         axios
             .post(window.Global.baseUrl + `/api/detail`, { id: this.id })
             .then(response => {
-                console.log(response);
                 if (response.data != 0) {
                     this.detailInfo = response.data.data[0];
                 } else {

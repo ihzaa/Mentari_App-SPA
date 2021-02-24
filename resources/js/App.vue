@@ -49,7 +49,6 @@ export default {
     },
     created() {
         this.$root.$refs.Loading = this;
-        console.log(this.user);
     },
     methods: {
         show() {

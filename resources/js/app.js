@@ -47,10 +47,17 @@ import router from "./routes";
 import {
     NavbarPlugin,
     CarouselPlugin,
-    CardPlugin,
+    BCard,
+    BCardImgLazy,
+    BCardHeader,
+    BCardBody,
+    BCardText,
+    BCardFooter,
     FormInputPlugin,
-    LayoutPlugin,
-    ButtonPlugin,
+    BContainer,
+    BRow,
+    BCol,
+    BButton,
     ButtonGroupPlugin,
     InputGroupPlugin,
     BIconPersonFill,
@@ -75,12 +82,19 @@ Vue.component('b-trash-fill',  BIconTrashFill);
 Vue.component('b-search',  BIconSearch);
 Vue.use(NavbarPlugin);
 Vue.use(CarouselPlugin);
-Vue.use(CardPlugin);
-Vue.use(LayoutPlugin);
+Vue.component('b-card',BCard);
+Vue.component('b-card-img-lazy',BCardImgLazy);
+Vue.component('b-card-header',BCardHeader);
+Vue.component('b-card-body',BCardBody);
+Vue.component('b-card-text',BCardText);
+Vue.component('b-card-footer',BCardFooter);
+Vue.component('b-container',BContainer);
+Vue.component('b-row',BRow);
+Vue.component('b-col',BCol);
 Vue.use(FormInputPlugin);
 Vue.use(InputGroupPlugin);
 Vue.use(ButtonGroupPlugin);
-Vue.use(ButtonPlugin);
+Vue.component('b-button', BButton)
 Vue.use(FormPlugin)
 Vue.use(VueLazyload);
 

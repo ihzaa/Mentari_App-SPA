@@ -77,7 +77,10 @@
                         <p>Rp. {{ formatPrice(product.price) }}</p>
                     </b-card-text>
                 </b-card-body>
-                <b-card-footer class="card-footer" tag="footer">
+                <b-card-footer
+                    class="card-footer d-flex justify-content-between"
+                    tag="footer"
+                >
                     <b-button
                         @click.stop="addToCart(product.item_id)"
                         variant="success"
@@ -86,10 +89,39 @@
                         <b-cart-check-fill style="width: 20px; height: 20px">
                         </b-cart-check-fill>
                     </b-button>
-                    <b-button @click.stop="" variant="success" v-else disabled>
+                    <b-button
+                        @click.stop=""
+                        variant="secondary"
+                        v-else
+                        disabled
+                    >
                         <b-cart-check-fill style="width: 20px; height: 20px">
                         </b-cart-check-fill>
                     </b-button>
+                    <div
+                        class="persediaan text-center"
+                        style="margin-top:10px"
+                        v-if="product.stock != 0"
+                    >
+                        <p style="line-height:2px">
+                            Persediaan
+                        </p>
+                        <p style="line-height:2px">
+                            <strong>{{ product.stock }}</strong>
+                        </p>
+                    </div>
+                    <div
+                        class="persediaan text-center"
+                        style="margin-top:10px"
+                        v-else
+                    >
+                        <p style="line-height:2px">
+                            Persediaan
+                        </p>
+                        <p style="line-height:2px">
+                            <strong class="text-danger">Kosong</strong>
+                        </p>
+                    </div>
                 </b-card-footer>
             </b-card>
         </b-row>
