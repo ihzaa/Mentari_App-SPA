@@ -1,9 +1,15 @@
 <template>
   <div class="container my-4 px-4">
-    <div class="row" v-if="items.length == 0">
-      <div class="col-md-12">
+    <div class="text-center my-5" v-if="items.length == 0">
+      <h4>Ups! Anda belum memiliki item di keranjang.</h4>
+      <h4 class="mt-5">
+        Silahkan kembali ke halaman
+        <router-link :to="{ name: 'home' }">home</router-link>
+        dan lanjut berbelanja.
+      </h4>
+      <!-- <div class="col-md-12">
         <h2 class="text-center">Ooopss kamu belum punya item di keranjang.</h2>
-      </div>
+      </div> -->
     </div>
     <div class="row" v-else>
       <div class="col-md-8">

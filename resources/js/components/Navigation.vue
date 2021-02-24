@@ -220,7 +220,9 @@ export default {
     },
     splitName() {
       if (!_.isEmpty(this.user)) {
-        this.name = this.user.name.split(" ").slice(0, 2).join(" ");
+        if (typeof this.user.name == "string") {
+          this.name = this.user.name.split(" ").slice(0, 2).join(" ");
+        }
       }
     },
     async category() {

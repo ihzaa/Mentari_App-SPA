@@ -126,6 +126,7 @@ export default {
         }
     },
     async mounted() {
+        console.log(User);
         this.loading = true;
         await axios
             .get(window.Global.baseUrl + `/api/detail/` + this.$route.params.id)
