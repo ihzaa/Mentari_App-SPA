@@ -96,7 +96,8 @@ export default {
     data() {
         return {
             detailInfo: [],
-            id: this.$route.params.id
+            id: this.$route.params.id,
+            loading: false
         };
     },
     methods: {
@@ -119,13 +120,13 @@ export default {
                         console.log(err);
                     })
                     .finally(() => {
-                        this.$root.$refs.Loading.hide();
+                        this.loading = false;
                     });
             }
         }
     },
     async mounted() {
-        this.$root.$refs.Loading.show();
+        this.loading = true;
         await axios
             .get(window.Global.baseUrl + `/api/detail/` + this.$route.params.id)
             .then(response => {
