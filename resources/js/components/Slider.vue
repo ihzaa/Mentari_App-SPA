@@ -9,22 +9,20 @@
 <template>
     <div>
         <div class="img-wrapper">
-            <Skeleton>
-                <carousel :perPage="1" v-if="imageCount != 0">
-                    <slide v-for="slide in detailImage" v-bind:key="slide.id">
-                        <img :src="global + slide.path" />
-                    </slide>
-                </carousel>
-                <carousel :perPage="1" v-else align="center">
-                    <slide>
-                        <img
-                            width="100%"
-                            height="280"
-                            src="/frontend/images/no-image-available.png"
-                        />
-                    </slide>
-                </carousel>
-            </Skeleton>
+            <carousel :perPage="1" v-if="imageCount != 0">
+                <slide v-for="slide in detailImage" v-bind:key="slide.id">
+                    <img :src="global + slide.path" />
+                </slide>
+            </carousel>
+            <carousel :perPage="1" v-else align="center">
+                <slide>
+                    <img
+                        width="100%"
+                        height="280"
+                        src="/frontend/images/no-image-available.png"
+                    />
+                </slide>
+            </carousel>
         </div>
     </div>
 </template>

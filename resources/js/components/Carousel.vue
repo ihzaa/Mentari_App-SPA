@@ -67,7 +67,7 @@ export default {
         try {
             let response = await Axios.get(`/api/carousel`);
             this.carouselInfo = response.data.data;
-            this.imgCount = response.data.data.lenght;
+            this.imgCount = response.data.data.length;
 
             this.global = global;
         } catch (err) {

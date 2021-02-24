@@ -1,34 +1,147 @@
-<style>
+<style scoped>
 body {
-    min-height: 100%;
+    min-height: 75rem;
     padding-top: 80px;
 }
+.slider {
+    min-width: 310px;
+}
 
-@media only screen and (max-width: 990px) {
-    body {
-        padding-top: 80px !important;
+@media only screen and (max-width: 700px) {
+    .detail-header {
+        flex-direction: column;
+    }
+    .detail-header h1 {
+        font-size: 22px;
+    }
+    .detail-header p,
+    .detail-body h5 {
+        font-size: 14px;
+    }
+    .detail-body h4 {
+        font-size: 18px;
+    }
+    .cart {
+        flex-direction: column;
+    }
+    .product-description {
+        padding: 30px 0 20px 0 !important;
     }
 }
 </style>
-
 <template>
     <div>
-        <b-navbar
-            toggleable="lg"
-            type="light"
-            class="bg-white px-5 fixed-top"
-            variant="info"
-        >
-            <b-navbar-brand href="#">
-                <h1><strong>Mentari</strong></h1>
-            </b-navbar-brand>
-            <b-navbar-nav class="ml-auto mr-4">
-                <b-nav-item>
-                    <router-link :to="{ name: 'home' }">
-                        <h6>Home</h6>
-                    </router-link>
-                </b-nav-item>
-            </b-navbar-nav>
-        </b-navbar>
+        <div class="mx-4 my-3">
+            <b-card class="p-3">
+                <b-row class="justify-content-around">
+                    <b-col class="slider" cols="5">
+                        <Slider />
+                    </b-col>
+                    <b-col class="product-description p-3" cols="7">
+                        <div
+                            class="detail-header d-flex justify-content-between"
+                        >
+                            <h1 class="align-self-center">
+                                <strong>{{ detailInfo.name }}</strong>
+                            </h1>
+                            <p class="align-self-center">
+                                {{ detailInfo.category_name }}
+                            </p>
+                        </div>
+                        <hr class="my-1" />
+                        <div class="detail-body my-3">
+                            <h5>{{ detailInfo.description }}</h5>
+
+                            <h4 class="mt-4 text-right">
+                                <strong>
+                                    Rp. {{ formatPrice(detailInfo.price) }}
+                                </strong>
+                            </h4>
+
+                            <div
+                                class="cart d-flex justify-content-between my-5"
+                            >
+                                <h5 class="align-self-center">
+                                    Stok barang :
+                                    <strong>{{ detailInfo.stock }}</strong>
+                                </h5>
+                                <b-button
+                                    @click="addToCart(id)"
+                                    variant="success"
+                                    class="align-self-center"
+                                >
+                                    Tambah Keranjang
+                                    <b-cart-check-fill
+                                        style="width: 20px; height: 20px"
+                                    >
+                                    </b-cart-check-fill>
+                                </b-button>
+                            </div>
+                        </div>
+                    </b-col>
+                </b-row>
+            </b-card>
+        </div>
     </div>
 </template>
+
+<script>
+import Slider from "./Slider";
+import User from "../user";
+
+export default {
+    components: {
+        Slider
+    },
+    data() {
+        return {
+            detailInfo: [],
+            id: this.$route.params.id,
+            loading: false
+        };
+    },
+    methods: {
+        formatPrice(value) {
+            let val = (value / 1).toFixed(0).replace(".", ",");
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        },
+        addToCart(id) {
+            if (_.isEmpty(User.data)) {
+                this.$router.push({ name: "login" });
+            } else {
+                this.$root.$refs.Loading.show();
+
+                axios
+                    .get(window.Global.baseUrl + "/api/add/to/cart/" + id)
+                    .then(resp => {
+                        this.$root.$refs.Nav.cartCounter = resp.data;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+                    .finally(() => {
+                        this.loading = false;
+                    });
+            }
+        }
+    },
+    async mounted() {
+        this.loading = true;
+        await axios
+            .get(window.Global.baseUrl + `/api/detail/` + this.$route.params.id)
+            .then(response => {
+                if (response.data != 0) {
+                    this.detailInfo = response.data.data[0];
+                } else {
+                    this.$router.push({ name: "notfound" });
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+            .finally(() => {
+                this.$root.$refs.Loading.hide();
+            });
+    }
+};
+</script>

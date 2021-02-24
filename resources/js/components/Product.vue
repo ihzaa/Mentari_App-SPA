@@ -57,7 +57,7 @@
                 ></b-card-img-lazy>
                 <b-card-header class="header text-center" tag="header">
                     <h5>
-                        <strong>{{ product.name }}></strong>
+                        <strong>{{ product.name }}</strong>
                     </h5>
                     <p style="margin-bottom: -10px">
                         {{ product.category_name }}
