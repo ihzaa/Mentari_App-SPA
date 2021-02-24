@@ -1,6 +1,11 @@
 <template>
   <div class="container my-4 px-4">
-    <div class="row">
+    <div class="row" v-if="items.length == 0">
+      <div class="col-md-12">
+        <h2 class="text-center">Ooopss kamu belum punya item di keranjang.</h2>
+      </div>
+    </div>
+    <div class="row" v-else>
       <div class="col-md-8">
         <h1>Keranjang</h1>
         <div v-for="(item, index) in items" :key="item.cart_id">
@@ -13,6 +18,7 @@
                   style="height: 17px; width: 17px"
                   type="checkbox"
                   v-bind:value="item.cart_id"
+                  v-model="checkedItem"
                 />
               </div>
             </div>
@@ -95,7 +101,56 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h2>Ringkasan Belanja</h2>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">
+              Total Harga: <strong>Rp. {{ formatPrice(totalPrice) }}</strong>
+            </h5>
+            <hr />
+            <h5 class="card-title">Pilih Alamat:</h5>
+            <div v-if="addresses.length == 0">
+              <h5>
+                Anda belum memiliki alamat, tambahkan di halaman
+                <router-link :to="{ name: 'profile' }">profil</router-link>.
+              </h5>
+            </div>
+            <div v-else>
+              <div
+                v-for="(address, index) in addresses"
+                v-bind:key="index"
+                class="d-flex card mb-2 p-1"
+              >
+                <div class="custom-control custom-radio my-auto mx-auto">
+                  <input
+                    type="radio"
+                    v-bind:id="'alamat' + address.id"
+                    name="alamat"
+                    class="custom-control-input"
+                    v-bind:value="address.id"
+                    v-model="checkedAddress"
+                  />
+                  <label
+                    class="custom-control-label ml-2"
+                    v-bind:for="'alamat' + address.id"
+                    >{{ address.address }}</label
+                  >
+                </div>
+              </div>
+              <button
+                class="btn btn-block btn-primary mt-4"
+                :disabled="buttonCondition"
+                @click="buy"
+              >
+                Beli
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -107,6 +162,9 @@ export default {
     return {
       items: [],
       global: window.Global.imgPath,
+      checkedItem: [],
+      addresses: [],
+      checkedAddress: "",
     };
   },
   methods: {
@@ -114,7 +172,8 @@ export default {
       axios
         .get(window.Global.baseUrl + "/api/get/cart/item")
         .then((result) => {
-          this.items = result.data;
+          this.items = result.data.items;
+          this.addresses = result.data.addresses;
         })
         .catch((err) => {
           console.log(err);
@@ -162,6 +221,7 @@ export default {
             })
             .then((result) => {
               this.items.splice(index, 1);
+              this.$root.$refs.Nav.cartCounter--;
             })
             .catch((err) => {
               console.log(err);
@@ -172,12 +232,60 @@ export default {
         }
       });
     },
+    buy() {
+      Swal.fire({
+        title: "Yakin melakukan pembelian?",
+        text: `Total harga Rp. ${this.formatPrice(
+          this.totalPrice
+        )} dibayarkan melalui kurir.`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: `Ya!`,
+        cancelButtonText: "Batal.",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$root.$refs.Loading.show();
+          axios
+            .post(window.Global.baseUrl + "/api/cart/item/buy", {
+              address: this.checkedAddress,
+              items: this.checkedItem,
+            })
+            .then((result) => {
+              this.$root.$refs.Nav.cartCounter = result.data;
+              this.$root.$refs.Loading.hide();
+              Swal.fire({
+                icon: "success",
+                title: "Pembelian berhasil.",
+              });
+              this.$router.push({ name: "home" });
+            })
+
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      });
+    },
   },
   created() {
     this.$root.$refs.Loading.show();
   },
   mounted() {
     this.getItem();
+  },
+  computed: {
+    totalPrice() {
+      let total = 0;
+      for (let i = 0; i < this.items.length; i++) {
+        if (this.checkedItem.includes(this.items[i].cart_id)) {
+          total += this.items[i].quantity * this.items[i].price;
+        }
+      }
+      return total;
+    },
+    buttonCondition() {
+      return _.isEmpty(this.checkedItem) || this.checkedAddress == "";
+    },
   },
 };
 </script>

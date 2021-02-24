@@ -476,7 +476,7 @@ export default {
       this.$root.$refs.Loading.show();
 
       await logoutUser();
-      await this.$router.push({ name: "home" });
+      this.$router.push({ name: "home" });
     },
     editPassword() {
       this.$root.$refs.Loading.show();

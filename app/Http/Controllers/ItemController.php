@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\address;
 use App\Models\cart;
 use App\Models\item;
+use App\Models\transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +44,12 @@ class ItemController extends Controller
 
     public function getCartItem()
     {
-        return response()->json(DB::select(DB::raw('SELECT c.id as "cart_id",i.id as "item_id",c.quantity, i.name, i.price, (SELECT item_images.path FROM item_images WHERE item_images.item_id = i.id LIMIT 1) as img FROM carts as c JOIN items as i ON c.item_id=i.id WHERE c.user_id="' . Auth::user()->id . '" AND c.status="0"')));
+        $items = DB::select(DB::raw('SELECT c.id as "cart_id",i.id as "item_id",c.quantity, i.name, i.price, (SELECT item_images.path FROM item_images WHERE item_images.item_id = i.id LIMIT 1) as img FROM carts as c JOIN items as i ON c.item_id=i.id WHERE c.user_id="' . Auth::user()->id . '" AND c.status="0"'));
+        $addresses = address::where('user_id', Auth::user()->id)->get();
+        return response()->json([
+            "items" => $items,
+            "addresses" => $addresses
+        ]);
     }
 
     public function deleteItemInCart(Request $request)
@@ -61,5 +68,18 @@ class ItemController extends Controller
             'quantity' => $request->quantity
         ]);
         return response()->json("ok");
+    }
+
+    public function buy(Request $request)
+    {
+        transaction::create([
+            "address_id" => $request->address,
+            "cart_id" => serialize($request->items)
+        ]);
+
+        cart::whereIn('id', $request->items)->update([
+            'status' => "1"
+        ]);
+        return $this->getCountCartItem();
     }
 }
