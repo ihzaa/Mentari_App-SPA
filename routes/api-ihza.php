@@ -18,3 +18,13 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('transaction/history', 'TranscationHistoryController@getHistory');
 });
+
+Route::prefix('auth')->group(function () {
+    // Send reset password mail
+    // Route::post('reset-password', 'Auth\ResetPasswordController@sendPasswordResetLink');
+
+    // handle reset password form process
+    Route::post('reset-password', 'Auth\ResetPasswordController@index');
+    // Route::post('reset-password', 'Auth\ResetPasswordController@sendPasswordResetLink');
+
+});

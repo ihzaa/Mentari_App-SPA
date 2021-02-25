@@ -63,6 +63,12 @@ html {
                 Login
               </button>
             </div>
+            <p>
+              Lupa password?
+              <router-link :to="{ name: 'reset-password' }">
+                Reset password
+              </router-link>
+            </p>
           </form>
         </div>
       </div>

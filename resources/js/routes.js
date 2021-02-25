@@ -11,6 +11,8 @@ const Profile = () => import("./components/Profile");
 const PageNotFound = () => import("./components/PageNotFound");
 const Cart = () => import("./components/Cart");
 const Riwayat = () => import("./components/Riwayat");
+const ForgotPassword = () => import("./components/ForgotPassword");
+// const ResetPasswordForm = () => import("./components/ResetPasswordForm");
 // import Home from "./components/Home";
 // import Login from "./components/Login";
 // import Register from "./components/Register";
@@ -73,7 +75,23 @@ const routes = [
         meta: {
             auth: true
         }
-    }
+    },
+    {
+        path: "/reset-password",
+        name: "reset-password",
+        component: ForgotPassword,
+        meta: {
+            notAuthenticated: true
+        }
+    },
+    // {
+    //     path: "/reset-password/:token",
+    //     name: "reset-password-form",
+    //     component: ResetPasswordForm,
+    //     meta: {
+    //         auth: false
+    //     }
+    // }
 ];
 
 const router = new VueRouter({
