@@ -144,9 +144,9 @@ export default {
             }
         }
     },
-    mounted() {
+    async mounted() {
         this.$root.$refs.Loading.show();
-        axios
+        await axios
             .post(window.Global.baseUrl + `/api/detail`, { id: this.id })
             .then(response => {
                 if (response.data != 0) {

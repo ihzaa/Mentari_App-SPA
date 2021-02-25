@@ -186,17 +186,9 @@ export default {
                 this.lastProductId = this.productInfo[
                     this.productInfo.length - 1
                 ].item_id;
+
                 return response.data.data.length;
 
-                // if (
-                //     response.data.data.current_page <
-                //     response.data.data.last_page
-                // ) {
-                //     this.moreExists = true;
-                //     this.nextPage = response.data.data.current_page + 1;
-                // } else {
-                //     this.moreExists = false;
-                // }
             } catch (err) {
                 console.log(err);
             }
@@ -223,7 +215,6 @@ export default {
         loadMore: async function() {
             this.loading = true;
             let dataLength = await this.loadProduct();
-            console.log(dataLength);
             if (dataLength < 15) {
                 this.moreExists = false;
             }
