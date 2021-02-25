@@ -10,27 +10,23 @@
             <div class="e-navlist e-navlist--active-bg">
               <ul class="nav">
                 <li class="nav-item">
-                  <a class="nav-link px-2 active"
-                    ><span class="icon mr-1">
+                  <p class="nav-link px-2 active">
+                    <span class="icon mr-1">
                       <b-person-fill
                         style="width: 20px; height: 20px"
                       ></b-person-fill>
-                      <!-- <font-awesome-icon
-                                                icon="user"
-                                            /> -->
                     </span>
-                    <span>Pengaturan Akun</span></a
-                  >
+                    <span>Pengaturan Akun</span>
+                  </p>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link px-2"
+                  <router-link :to="{ name: 'riwayat' }" class="nav-link px-2"
                     ><span class="icon mr-1">
                       <b-cart-check-fill
                         style="width: 20px; height: 20px"
                       ></b-cart-check-fill>
-                      <!-- <font-awesome-icon icon="shopping-cart" /> -->
                     </span>
-                    <span>Riwayat Belanja</span></a
+                    <span>Riwayat Belanja</span></router-link
                   >
                 </li>
               </ul>
@@ -365,17 +361,6 @@
                       <span>Logout</span>
                     </button>
                   </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-body">
-                  <h6 class="card-title font-weight-bold">Support</h6>
-                  <p class="card-text">
-                    Get fast, free help from our friendly assistants.
-                  </p>
-                  <button type="button" class="btn btn-primary">
-                    Contact Us
-                  </button>
                 </div>
               </div>
             </div>

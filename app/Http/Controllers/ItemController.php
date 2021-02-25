@@ -77,7 +77,8 @@ class ItemController extends Controller
     {
         transaction::create([
             "address_id" => $request->address,
-            "cart_id" => serialize($request->items)
+            "cart_id" => json_encode($request->items),
+            "user_id" => Auth::user()->id
         ]);
 
         cart::whereIn('id', $request->items)->update([

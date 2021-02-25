@@ -33,6 +33,7 @@
         "bootstrap-vue": "^2.21.2",
         "hooper": "^0.3.4",
         "lodash.isempty": "^4.4.0",
+        "moment": "^2.29.1",
         "sweetalert2": "^10.15.5",
         "vue-carousel": "^0.18.0",
         "vue-infinite-scroll": "^2.0.2",
