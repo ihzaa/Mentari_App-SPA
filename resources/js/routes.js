@@ -10,6 +10,7 @@ const Detail = () => import("./components/Detail");
 const Profile = () => import("./components/Profile");
 const PageNotFound = () => import("./components/PageNotFound");
 const Cart = () => import("./components/Cart");
+const Riwayat = () => import("./components/Riwayat");
 // import Home from "./components/Home";
 // import Login from "./components/Login";
 // import Register from "./components/Register";
@@ -61,6 +62,14 @@ const routes = [
         path: "/cart",
         component: Cart,
         name: "cart",
+        meta: {
+            auth: true
+        }
+    },
+    {
+        path: "/riwayat",
+        component: Riwayat,
+        name: "riwayat",
         meta: {
             auth: true
         }

@@ -15,4 +15,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('delete/cart/item', 'ItemController@deleteItemInCart');
     Route::post('cart/item/quantity', 'ItemController@changeQuantity');
     Route::post('cart/item/buy', 'ItemController@buy');
+
+    Route::get('transaction/history', 'TranscationHistoryController@getHistory');
 });
