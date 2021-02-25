@@ -44,7 +44,10 @@ class ItemController extends Controller
 
     public function getCartItem()
     {
-        $items = DB::select(DB::raw('SELECT c.id as "cart_id",i.id as "item_id",c.quantity, i.name, i.price, (SELECT item_images.path FROM item_images WHERE item_images.item_id = i.id LIMIT 1) as img FROM carts as c JOIN items as i ON c.item_id=i.id WHERE c.user_id="' . Auth::user()->id . '" AND c.status="0"'));
+        $availableItem = item::where('stock', ">", "0")->pluck('id');
+        cart::whereNotIn('item_id', $availableItem)->where('user_id', Auth::user()->id)->delete();
+        $items = DB::select(DB::raw('SELECT c.id as "cart_id",i.id as "item_id",c.quantity, i.name, i.price, i.stock as "stock", (SELECT item_images.path FROM item_images WHERE item_images.item_id = i.id LIMIT 1) as img FROM carts as c JOIN items as i ON c.item_id=i.id WHERE c.user_id="' . Auth::user()->id . '" AND c.status="0"'));
+
         $addresses = address::where('user_id', Auth::user()->id)->get();
         return response()->json([
             "items" => $items,
@@ -80,6 +83,12 @@ class ItemController extends Controller
         cart::whereIn('id', $request->items)->update([
             'status' => "1"
         ]);
+
+        $cart = cart::whereIn('id', $request->items)->pluck('quantity', 'item_id');
+        foreach ($cart as $k => $v) {
+            item::find($k)->decrement('stock', $v);
+        }
+
         return $this->getCountCartItem();
     }
 }

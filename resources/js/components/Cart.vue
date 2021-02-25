@@ -63,6 +63,9 @@
                     ><strong>Rp. {{ formatPrice(item.price) }}</strong></small
                   >
                 </h3>
+                <h5>
+                  <small>persediaan {{ item.stock }}</small>
+                </h5>
               </div>
               <div class="d-flex">
                 <ul class="ml-auto list-inline">
@@ -180,6 +183,7 @@ export default {
         .then((result) => {
           this.items = result.data.items;
           this.addresses = result.data.addresses;
+          this.$root.$refs.Nav.cartCounter = result.data.items.length;
         })
         .catch((err) => {
           console.log(err);
@@ -195,6 +199,14 @@ export default {
     async changeQuantity(index, quantity) {
       if (quantity <= 0) {
         this.deleteItem(index);
+        return;
+      }
+      if (this.items[index].stock < quantity) {
+        Swal.fire({
+          icon: "error",
+          title: "Stok barang tidak mencukupi!",
+        });
+        this.items[index].quantity = this.items[index].stock;
         return;
       }
       this.items[index].quantity = quantity;
