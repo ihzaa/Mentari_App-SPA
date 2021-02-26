@@ -64,6 +64,7 @@ import {
     BIconTrashFill,
     BIconCartCheckFill,
     BIconSearch,
+    BIconCartX,
     BSpinner
 } from "bootstrap-vue";
 import VueLazyload from "vue-lazyload";
@@ -80,6 +81,7 @@ Vue.component('b-cart-check-fill',  BIconCartCheckFill);
 Vue.component('b-person-fill',  BIconPersonFill);
 Vue.component('b-trash-fill',  BIconTrashFill);
 Vue.component('b-search',  BIconSearch);
+Vue.component('b-cart-x',  BIconCartX);
 Vue.use(NavbarPlugin);
 Vue.use(CarouselPlugin);
 Vue.component('b-card',BCard);

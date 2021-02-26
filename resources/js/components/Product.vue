@@ -31,114 +31,151 @@
 
 <template>
     <div class="mx-5 my-3">
-        <b-row class="justify-content-around" align-v="center">
-            <b-card
-                class="product-card my-2 p-3 mx-1"
-                v-for="product in productInfo"
-                @click="goToDetail(product.item_id)"
-                v-bind:key="product.item_id"
-                name=""
-                data-aos="zoom-in-up"
-            >
-                <b-card-img-lazy
-                    width="100%"
-                    height="200"
-                    v-if="product.path != null"
-                    v-lazy="global + product.path"
-                    top
-                ></b-card-img-lazy>
-                <b-card-img-lazy
-                    width="100%"
-                    height="200"
-                    v-else
-                    src="/frontend/images/no-image-available.png"
-                    style="border: 1px solid lightgray"
-                    top
-                ></b-card-img-lazy>
-                <b-card-header class="header text-center" tag="header">
-                    <h5>
-                        <strong>{{ product.name }}</strong>
-                    </h5>
-                    <p style="margin-bottom: -10px">
-                        {{ product.category_name }}
-                    </p>
-                </b-card-header>
-                <b-card-body>
-                    <b-card-text
-                        class="info"
-                        v-if="product.description.length < 180"
+        <div class="d-flex justify-content-around" v-if="!cekValue">
+            <h4 v-if="searchvalue != ''">
+                <strong>Pencarian : {{ searchvalue }}</strong>
+            </h4>
+            <h4 v-else>
+                <strong>Pencarian : -</strong>
+            </h4>
+            <h4 v-if="!cekCategory">
+                <strong>Kategori : {{ categoryname }}</strong>
+            </h4>
+            <h4 v-else>
+                <strong>Kategori : -</strong>
+            </h4>
+        </div>
+        <div v-if="!load">
+            <div v-if="productList">
+                <b-row class="justify-content-around" align-v="center">
+                    <b-card
+                        class="product-card my-2 p-3 mx-1"
+                        v-for="product in productInfo"
+                        @click="goToDetail(product.item_id)"
+                        v-bind:key="product.item_id"
+                        name=""
+                        data-aos="zoom-in-up"
                     >
-                        {{ product.description }}
-                    </b-card-text>
-                    <b-card-text class="info" v-else>
-                        {{ product.description.substring(0, 180) + "..." }}
-                    </b-card-text>
-                    <b-card-text class="harga text-right">
-                        <p>Rp. {{ formatPrice(product.price) }}</p>
-                    </b-card-text>
-                </b-card-body>
-                <b-card-footer
-                    class="card-footer d-flex justify-content-between"
-                    tag="footer"
-                >
+                        <b-card-img-lazy
+                            width="100%"
+                            height="200"
+                            v-if="product.path != null"
+                            v-lazy="global + product.path"
+                            top
+                        ></b-card-img-lazy>
+                        <b-card-img-lazy
+                            width="100%"
+                            height="200"
+                            v-else
+                            src="/frontend/images/no-image-available.png"
+                            style="border: 1px solid lightgray"
+                            top
+                        ></b-card-img-lazy>
+                        <b-card-header class="header text-center" tag="header">
+                            <h5>
+                                <strong>{{ product.name }}</strong>
+                            </h5>
+                            <p style="margin-bottom: -10px">
+                                {{ product.category_name }}
+                            </p>
+                        </b-card-header>
+                        <b-card-body>
+                            <b-card-text
+                                class="info"
+                                v-if="product.description.length < 180"
+                            >
+                                {{ product.description }}
+                            </b-card-text>
+                            <b-card-text class="info" v-else>
+                                {{
+                                    product.description.substring(0, 180) +
+                                        "..."
+                                }}
+                            </b-card-text>
+                            <b-card-text class="harga text-right">
+                                <p>Rp. {{ formatPrice(product.price) }}</p>
+                            </b-card-text>
+                        </b-card-body>
+                        <b-card-footer
+                            class="card-footer d-flex justify-content-between"
+                            tag="footer"
+                        >
+                            <b-button
+                                @click.stop="addToCart(product.item_id)"
+                                variant="success"
+                                v-if="product.stock != 0"
+                            >
+                                <b-cart-check-fill
+                                    style="width: 20px; height: 20px"
+                                >
+                                </b-cart-check-fill>
+                            </b-button>
+                            <b-button
+                                @click.stop=""
+                                variant="secondary"
+                                v-else
+                                disabled
+                            >
+                                <b-cart-check-fill
+                                    style="width: 20px; height: 20px"
+                                >
+                                </b-cart-check-fill>
+                            </b-button>
+                            <div
+                                class="persediaan text-center"
+                                style="margin-top:10px"
+                                v-if="product.stock != 0"
+                            >
+                                <p style="line-height:2px">
+                                    Persediaan
+                                </p>
+                                <p style="line-height:2px">
+                                    <strong>{{ product.stock }}</strong>
+                                </p>
+                            </div>
+                            <div
+                                class="persediaan text-center"
+                                style="margin-top:10px"
+                                v-else
+                            >
+                                <p style="line-height:2px">
+                                    Persediaan
+                                </p>
+                                <p style="line-height:2px">
+                                    <strong class="text-danger">Kosong</strong>
+                                </p>
+                            </div>
+                        </b-card-footer>
+                    </b-card>
+                </b-row>
+                <div class="text-center my-4" v-show="moreExists">
                     <b-button
-                        @click.stop="addToCart(product.item_id)"
                         variant="success"
-                        v-if="product.stock != 0"
+                        @click="loadMore"
+                        v-if="!loading"
                     >
-                        <b-cart-check-fill style="width: 20px; height: 20px">
-                        </b-cart-check-fill>
+                        Tampilkan Lebih Banyak
                     </b-button>
                     <b-button
-                        @click.stop=""
-                        variant="secondary"
-                        v-else
+                        variant="success"
+                        style="font-size: 16px"
                         disabled
-                    >
-                        <b-cart-check-fill style="width: 20px; height: 20px">
-                        </b-cart-check-fill>
-                    </b-button>
-                    <div
-                        class="persediaan text-center"
-                        style="margin-top:10px"
-                        v-if="product.stock != 0"
-                    >
-                        <p style="line-height:2px">
-                            Persediaan
-                        </p>
-                        <p style="line-height:2px">
-                            <strong>{{ product.stock }}</strong>
-                        </p>
-                    </div>
-                    <div
-                        class="persediaan text-center"
-                        style="margin-top:10px"
+                        align-v="center"
                         v-else
                     >
-                        <p style="line-height:2px">
-                            Persediaan
-                        </p>
-                        <p style="line-height:2px">
-                            <strong class="text-danger">Kosong</strong>
-                        </p>
-                    </div>
-                </b-card-footer>
-            </b-card>
-        </b-row>
-        <div class="text-center my-4" v-show="moreExists">
-            <b-button variant="success" @click="loadMore" v-if="!loading">
-                Tampilkan Lebih Banyak
-            </b-button>
-            <b-button
-                variant="success"
-                style="font-size: 16px"
-                disabled
-                align-v="center"
-                v-else
-            >
-                <b-spinner small></b-spinner>
-                Loading...
-            </b-button>
+                        <b-spinner small></b-spinner>
+                        Loading...
+                    </b-button>
+                </div>
+            </div>
+            <div class="text-center my-5" v-else>
+                <p style="font-size:24px!important;line-height:20px">
+                    <strong>Produk tidak ditemukan</strong>
+                </p>
+            </div>
+        </div>
+        <div class="text-center my-5" v-else>
+            <b-spinner style="width: 3rem; height: 3rem;"></b-spinner>
         </div>
     </div>
 </template>
@@ -156,11 +193,13 @@ export default {
         return {
             searchvalue: "",
             categoryvalue: "",
+            categoryname: "",
             productInfo: [],
             global: window.Global.imgPath,
             moreExists: true,
+            productList: true,
             loading: false,
-            searchProduct: false,
+            load: false,
             lastProductId: 0
         };
     },
@@ -174,21 +213,27 @@ export default {
         },
         loadProduct: async function() {
             try {
+                this.moreExists = true;
                 let response = await axios.post(`/api/product`, {
                     search: this.searchvalue,
                     category: this.categoryvalue,
                     lastId: this.lastProductId
                 });
-                this.productInfo.push.apply(
-                    this.productInfo,
-                    response.data.data
-                );
-                this.lastProductId = this.productInfo[
-                    this.productInfo.length - 1
-                ].item_id;
-
-                return response.data.data.length;
-
+                if (response.data.data.length != 0) {
+                    this.productList = true;
+                    this.productInfo.push.apply(
+                        this.productInfo,
+                        response.data.data
+                    );
+                    this.lastProductId = this.productInfo[
+                        this.productInfo.length - 1
+                    ].item_id;
+                    if (response.data.data.length < 15) {
+                        this.moreExists = false;
+                    }
+                } else {
+                    this.productList = false;
+                }
             } catch (err) {
                 console.log(err);
             }
@@ -214,10 +259,7 @@ export default {
         },
         loadMore: async function() {
             this.loading = true;
-            let dataLength = await this.loadProduct();
-            if (dataLength < 15) {
-                this.moreExists = false;
-            }
+            await this.loadProduct();
             this.loading = false;
 
             //   await axios
@@ -236,11 +278,13 @@ export default {
             //       this.loading = false;
             //     });
         },
-        filteredProduct() {
-            this.searchProduct = true;
+        async filteredProduct() {
             this.productInfo = [];
             this.lastProductId = 0;
-            this.loadProduct();
+            this.load = true;
+            await this.loadProduct();
+            this.load = false;
+            // console.log(this.load);
             //   axios
             //     .get(`/api/search?name=` + this.seachvalue)
             //     .then((response) => {
@@ -278,7 +322,21 @@ export default {
         EventBus.$on("category-value", value => {
             this.categoryvalue = value;
         });
+        EventBus.$on("category-name", value => {
+            this.categoryname = value;
+        });
         this.loadProduct();
+    },
+    computed: {
+        cekValue() {
+            return (
+                (this.searchvalue == "" && this.categoryvalue == "") ||
+                (this.searchvalue == "" && this.categoryvalue == null)
+            );
+        },
+        cekCategory() {
+            return this.categoryvalue == "" || this.categoryvalue == null;
+        }
     }
 };
 </script>
