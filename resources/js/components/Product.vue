@@ -56,17 +56,19 @@
                         name=""
                         data-aos="zoom-in-up"
                     >
-                        <b-card
+                        <b-card-img-lazy
                             width="100%"
                             height="200"
                             v-if="product.path != null"
                             v-lazy="global + product.path"
+                            :src="global + product.path"
                             top
-                        ></b-card>
+                        ></b-card-img-lazy>
                         <b-card-img-lazy
                             width="100%"
                             height="200"
                             v-else
+                            loading="lazy"
                             src="/frontend/images/no-image-available.png"
                             style="border: 1px solid lightgray"
                             top
