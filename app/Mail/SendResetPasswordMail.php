@@ -29,7 +29,7 @@ class SendResetPasswordMail extends Mailable
     public function build()
     {
         // return $this->view('view.name');
-        return $this->from('pantiasuhanulilabshar@gmail.com')
+        return $this->from('tokomentarimalang@gmail.com')
             ->view('resetPasswordMail')
             ->with(
                 [

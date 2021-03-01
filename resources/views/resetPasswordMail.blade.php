@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <h1>Ini password barumu {{$password}}</h1>
+    <h3>Pelanggan yang terhormat, silahkan login dengan password ini <strong>{{$password}}</strong> lalu ubah password anda pada halaman profile. </h1>
 </body>
 
 </html>

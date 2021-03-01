@@ -56,13 +56,13 @@
                         name=""
                         data-aos="zoom-in-up"
                     >
-                        <b-card-img-lazy
+                        <b-card
                             width="100%"
                             height="200"
                             v-if="product.path != null"
                             v-lazy="global + product.path"
                             top
-                        ></b-card-img-lazy>
+                        ></b-card>
                         <b-card-img-lazy
                             width="100%"
                             height="200"
