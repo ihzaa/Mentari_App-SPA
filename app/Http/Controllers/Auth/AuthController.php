@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\customer;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -21,20 +22,32 @@ class AuthController extends Controller
             return response(['errors' => $validator->errors()], 422);
         }
 
-        $data = [
-            'email' => $request->email,
-            'password' => $request->password
-        ];
+        // $data = [
+        //     'email' => $request->email,
+        //     'password' => $request->password
+        // ];
+        // if (auth()->attempt($data)) {
+        $user = User::where('email', $request->email)->first();
 
-        if (auth()->attempt($data)) {
-            $token = auth()->user()->createToken('access_token')->accessToken;
-            return response()->json([
-                'message' => 'success',
-                'data' => auth()->user(),
-                'meta' => [
-                    'token' => $token
-                ]
-            ], 200);
+        if ($user != null) {
+            if (Hash::check($request->password, $user->password)) {
+                auth()->loginUsingId($user->id);
+                $token = $user->createToken('access_token')->accessToken;
+                return response()->json([
+                    'message' => 'success',
+                    'data' => auth()->user(),
+                    'meta' => [
+                        'token' => $token
+                    ]
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Authentication is invalid.',
+                    'errors' => [
+                        'root' => 'Username or Password not found.'
+                    ]
+                ], 401);
+            }
         } else {
             return response()->json([
                 'message' => 'Authentication is invalid.',

@@ -237,6 +237,7 @@ export default {
     methods: {
         async logout() {
             await logoutUser();
+            this.cartCounter = 0;
             await this.$router.push({ name: "home" });
         },
         splitName() {

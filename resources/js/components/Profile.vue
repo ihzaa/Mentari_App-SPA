@@ -461,6 +461,7 @@ export default {
       this.$root.$refs.Loading.show();
 
       await logoutUser();
+      this.$root.$refs.Nav.cartCounter = 0;
       this.$router.push({ name: "home" });
     },
     editPassword() {
