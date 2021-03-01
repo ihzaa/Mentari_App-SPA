@@ -13,8 +13,8 @@ class TranscationHistoryController extends Controller
     public function getHistory()
     {
         $history = transaction::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get(['cart_id', 'created_at']);
-        $cart = cart::where('user_id', Auth::user()->id)->where('status', "1")->pluck('item_id', 'id');
-        $item = item::pluck('name', 'id');
+        $cart = cart::where('user_id', Auth::user()->id)->where('status', "1")->get(["id", 'item_id', 'quantity'])->keyBy('id');
+        $item = item::withTrashed()->pluck('name', 'id');
 
         return response()->json([
             "history" => $history,

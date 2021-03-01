@@ -104,6 +104,7 @@ export default {
           axios.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${resp.data.meta.token}`;
+          this.$root.$refs.Nav.cartCounter = resp.data.meta.cart;
           this.$router.push({ name: "home" });
         })
         .catch((error) => {
