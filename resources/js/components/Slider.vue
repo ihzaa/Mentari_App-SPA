@@ -40,16 +40,6 @@ export default {
             detailImage: [],
             imageCount: 0,
             global: window.Global.imgPath
-            // settings: {
-            //     lazyLoad: "progressive",
-            //     arrows: true,
-            //     dots: true,
-            //     fade: true,
-            //     infinite: true,
-            //     speed: 100,
-            //     slidesToShow: 1,
-            //     slidesToScroll: 1
-            // }
         };
     },
     async mounted() {
@@ -57,10 +47,12 @@ export default {
             let response = await axios.get(
                 window.Global.baseUrl +
                     `/api/detail_image/` +
-                    this.$route.params.id
+                    this.$route.query.id
             );
+            console.log(response);
             this.detailImage = response.data.data;
             this.imageCount = response.data.data.length;
+            console.log(this.detailImage);
         } catch (err) {
             console.log(err);
         }
