@@ -69,7 +69,9 @@
                               v-for="(id, idx) in parseItemId(history.cart_id)"
                               v-bind:key="idx"
                             >
-                              {{ itemId[carts[id]] }}
+                              {{ itemId[carts[id].item_id] }} x{{
+                                carts[id].quantity
+                              }}
                             </li>
                           </ul>
                         </div>
@@ -101,6 +103,8 @@
 
 <script>
 import moment from "moment";
+import { logoutUser } from "../authUser";
+
 export default {
   data() {
     return {
@@ -135,7 +139,14 @@ export default {
       return JSON.parse(arr);
     },
     timeStampToDate(date) {
-      return moment(date).format("DD, MM YYYY");
+      return moment(date).format("D MMM YYYY");
+    },
+    async logout() {
+      this.$root.$refs.Loading.show();
+
+      await logoutUser();
+      this.$root.$refs.Nav.cartCounter = 0;
+      this.$router.push({ name: "home" });
     },
   },
   created() {

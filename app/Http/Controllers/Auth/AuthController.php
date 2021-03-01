@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ItemController;
+use App\Models\cart;
 use App\Models\customer;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,7 +40,8 @@ class AuthController extends Controller
                     'message' => 'success',
                     'data' => auth()->user(),
                     'meta' => [
-                        'token' => $token
+                        'token' => $token,
+                        'cart' => cart::where('user_id', Auth::user()->id)->where('status', '0')->count()
                     ]
                 ], 200);
             } else {
