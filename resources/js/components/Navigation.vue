@@ -25,12 +25,11 @@ body {
     margin-top: auto;
     margin-bottom: auto;
 }
-.shopping-cart:hover {
-    background-color: lightgreen;
-    border-radius: 50px;
-}
+/* .shopping-cart:hover {
+    border-bottom: 1px solid lightgreen;
+} */
 .shopping-cart:hover span {
-    color: white;
+    color: black;
 }
 #search {
     border-color: lightgrey;
@@ -64,9 +63,10 @@ body {
         width: 100%;
     }
     .kategori {
-        margin-left: auto !important;
+        /* margin-left: auto !important;
         margin-right: auto !important;
-        margin-top: 20px;
+        margin-top: 20px; */
+        margin: auto !important;
         position: relative;
     }
     .kategori span {
@@ -85,6 +85,12 @@ body {
         border-left: 0;
         margin-left: auto;
         margin-right: auto;
+        padding-left: 0;
+        font-size: 18px;
+    }
+    .userNav {
+        border-left: 0;
+        margin: auto !important;
         padding-left: 0;
         font-size: 18px;
     }
@@ -136,6 +142,11 @@ body {
 
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav class="ml-auto mr-4">
+                    <b-nav-item class="shopping-cart" :to="{ name: 'home' }">
+                        <span>
+                            <strong>Home</strong>
+                        </span>
+                    </b-nav-item>
                     <b-nav-item-dropdown
                         class="kategori"
                         right
