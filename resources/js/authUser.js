@@ -1,5 +1,10 @@
 import User from "./user";
 export const getUser = () => {
+    axios.defaults.headers = {
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
+        Expires: "0"
+    };
     let token = localStorage.getItem("token");
     if (!_.isEmpty(token)) {
         axios
