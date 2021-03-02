@@ -70,12 +70,10 @@ import {
 import VueLazyload from "vue-lazyload";
 import App from "./App.vue";
 import global from './global';
-import { FormPlugin } from 'bootstrap-vue'
-import Skeleton from 'vue-loading-skeleton';
+import { FormPlugin } from 'bootstrap-vue';
 
 window.Global = global;
 
-Vue.use(Skeleton);
 Vue.component('b-spinner', BSpinner)
 Vue.component('b-cart-check-fill',  BIconCartCheckFill);
 Vue.component('b-person-fill',  BIconPersonFill);
