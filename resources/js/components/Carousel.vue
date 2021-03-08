@@ -3,6 +3,9 @@
     .carousel-image {
         height: 150px;
     }
+    .title {
+        font-size: 24px !important;
+    }
 }
 </style>
 
@@ -42,7 +45,7 @@
                         v-lazy="global.imgPath + carousel.image"
                     />
                 </template>
-                <h1>{{ carousel.title }}</h1>
+                <h1 class="title">{{ carousel.title }}</h1>
                 <p>{{ carousel.description }}</p>
             </b-carousel-slide>
         </b-carousel>

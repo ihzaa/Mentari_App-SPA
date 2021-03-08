@@ -65,7 +65,8 @@ import {
     BIconCartCheckFill,
     BIconSearch,
     BIconCartX,
-    BSpinner
+    BSpinner,
+    BBadge
 } from "bootstrap-vue";
 import VueLazyload from "vue-lazyload";
 import App from "./App.vue";
@@ -74,7 +75,8 @@ import { FormPlugin } from 'bootstrap-vue';
 
 window.Global = global;
 
-Vue.component('b-spinner', BSpinner)
+Vue.component('b-badge', BBadge);
+Vue.component('b-spinner', BSpinner);
 Vue.component('b-cart-check-fill',  BIconCartCheckFill);
 Vue.component('b-person-fill',  BIconPersonFill);
 Vue.component('b-trash-fill',  BIconTrashFill);

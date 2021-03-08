@@ -49,10 +49,8 @@ export default {
                     `/api/detail_image/` +
                     this.$route.query.id
             );
-            console.log(response);
             this.detailImage = response.data.data;
             this.imageCount = response.data.data.length;
-            console.log(this.detailImage);
         } catch (err) {
             console.log(err);
         }

@@ -44,6 +44,14 @@ body {
                             <h1 class="align-self-center">
                                 <strong>{{ detailInfo.name }}</strong>
                             </h1>
+
+                            <b-badge
+                                variant="success"
+                                class="align-self-center"
+                                style="font-size:16px"
+                            >
+                                Promo
+                            </b-badge>
                             <p class="align-self-center">
                                 {{ detailInfo.category_name }}
                             </p>
@@ -52,11 +60,32 @@ body {
                         <div class="detail-body my-3">
                             <h5>{{ detailInfo.description }}</h5>
 
-                            <h4 class="mt-4 text-right">
+                            <h3
+                                class="mt-4 text-right"
+                                v-if="detailInfo.promo == null"
+                            >
                                 <strong>
                                     Rp. {{ formatPrice(detailInfo.price) }}
                                 </strong>
-                            </h4>
+                            </h3>
+                            <div class="mt-4 text-right" v-else>
+                                <h3>
+                                    <strong
+                                        >Rp.
+                                        {{
+                                            formatPrice(detailInfo.promo)
+                                        }}</strong
+                                    >
+                                </h3>
+                                <p style="font-size:18px; margin-top:-10px">
+                                    <strong>
+                                        <s class="text-danger"
+                                            >Rp.
+                                            {{ formatPrice(detailInfo.price) }}
+                                        </s>
+                                    </strong>
+                                </p>
+                            </div>
 
                             <div
                                 class="cart d-flex justify-content-between my-5"

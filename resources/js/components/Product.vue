@@ -13,6 +13,7 @@
     height: 110px;
 }
 .harga {
+    height: 50px;
     font-size: 18px;
     font-weight: 1000 !important;
 }
@@ -22,6 +23,60 @@
 .card-footer {
     background-color: white;
 }
+
+/* Ribbon */
+.ribbon {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    position: absolute;
+}
+.ribbon::before,
+.ribbon::after {
+    position: absolute;
+    z-index: -1;
+    content: "";
+    display: block;
+    border: 5px solid green;
+}
+.ribbon span {
+    position: absolute;
+    display: block;
+    width: 225px;
+    padding: 15px 0;
+    background-color: green;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    font: 700 18px/1 "Roboto", sans-serif;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* top right*/
+.ribbon-top-right {
+    top: -10px;
+    right: -10px;
+}
+.ribbon-top-right::before,
+.ribbon-top-right::after {
+    border-top-color: transparent;
+    border-right-color: transparent;
+}
+.ribbon-top-right::before {
+    top: 0;
+    left: 0;
+}
+.ribbon-top-right::after {
+    bottom: 0;
+    right: 0;
+}
+.ribbon-top-right span {
+    left: -25px;
+    top: 30px;
+    transform: rotate(45deg);
+}
+
 @media only screen and (max-width: 700px) {
     .product-card {
         max-width: 40rem;
@@ -31,19 +86,27 @@
 
 <template>
     <div class="mx-5 my-3">
-        <div class="d-flex justify-content-around" v-if="!cekValue">
-            <h4 v-if="searchvalue != ''">
-                <strong>Pencarian : {{ searchvalue }}</strong>
-            </h4>
-            <h4 v-else>
-                <strong>Pencarian : -</strong>
-            </h4>
-            <h4 v-if="!cekCategory">
-                <strong>Kategori : {{ categoryname }}</strong>
-            </h4>
-            <h4 v-else>
-                <strong>Kategori : -</strong>
-            </h4>
+        <div class="row" v-if="!cekValue">
+            <div class="col-md-6" v-if="searchvalue != ''">
+                <h4>
+                    <strong>Pencarian : {{ searchvalue }}</strong>
+                </h4>
+            </div>
+            <div class="col-md-6" v-else>
+                <h4>
+                    <strong>Pencarian : -</strong>
+                </h4>
+            </div>
+            <div class="col-md-6" v-if="!cekCategory">
+                <h4>
+                    <strong>Kategori : {{ categoryname }}</strong>
+                </h4>
+            </div>
+            <div class="col-md-6" v-else>
+                <h4>
+                    <strong>Kategori : -</strong>
+                </h4>
+            </div>
         </div>
         <div v-if="!load">
             <div v-if="productList">
@@ -56,6 +119,12 @@
                         name=""
                         data-aos="zoom-in-up"
                     >
+                        <div
+                            class="ribbon ribbon-top-right"
+                            v-if="product.promo != null"
+                        >
+                            <span>Promo</span>
+                        </div>
                         <b-card-img-lazy
                             width="100%"
                             height="200"
@@ -94,8 +163,20 @@
                                         "..."
                                 }}
                             </b-card-text>
-                            <b-card-text class="harga text-right">
+                            <b-card-text
+                                class="harga text-right"
+                                style="line-height:10px"
+                                v-if="product.promo == null"
+                            >
                                 <p>Rp. {{ formatPrice(product.price) }}</p>
+                            </b-card-text>
+                            <b-card-text class="harga text-right" v-else>
+                                <p>Rp. {{ formatPrice(product.promo) }}</p>
+                                <p style="font-size:14px; margin-top:-20px">
+                                    <s class="text-danger"
+                                        >Rp. {{ formatPrice(product.price) }}</s
+                                    >
+                                </p>
                             </b-card-text>
                         </b-card-body>
                         <b-card-footer
