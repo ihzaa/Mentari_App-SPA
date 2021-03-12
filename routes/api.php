@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
+ */
 
 Route::group(['prefix' => 'auth'], function () {
     Route::post('register', 'Auth\RegisterController@register')->name('register');
@@ -24,6 +23,7 @@ Route::middleware('auth:api')->get('/user', 'Auth\AuthController@user');
 
 Route::get('/carousel', 'HomeController@getCarousel');
 Route::post('/product', 'HomeController@getProduct');
+Route::post('/promo', 'HomeController@getPromo');
 Route::post('/detail', 'HomeController@getDetail');
 Route::get('/category', 'HomeController@getCategory');
 Route::get('/detail_image/{id}', 'HomeController@getDetailImage');

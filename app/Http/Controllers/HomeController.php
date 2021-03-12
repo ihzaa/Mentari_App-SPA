@@ -49,6 +49,7 @@ class HomeController extends Controller
             ], 200);
         }
     }
+
     public function getDetail(Request $request)
     {
         $product = DB::select(DB::raw('SELECT items.id AS item_id,items.name,items.price,items.promo,items.description,items.stock, categories.name AS category_name FROM items JOIN categories ON items.category_id = categories.id WHERE items.id = ' . $request->id));
@@ -116,6 +117,28 @@ class HomeController extends Controller
             ], 200);
         } else {
             return 0;
+        }
+    }
+
+    public function getPromo(Request $request)
+    {
+        if ($request->search == "") {
+            $product = DB::select(DB::raw('SELECT items.id AS item_id,items.name,items.price,items.promo,items.description,items.stock,categories.id AS category_id, categories.name AS category_name, (SELECT item_images.path FROM item_images WHERE item_images.item_id = items.id ORDER BY item_images.id LIMIT 1) AS path FROM items JOIN categories ON items.category_id = categories.id WHERE items.id > ' . $request->lastId . '  AND items.deleted_at IS NULL AND items.promo IS NOT NULL ORDER BY items.updated_at DESC LIMIT 15'));
+        } else {
+            $product = DB::select(DB::raw('SELECT items.id AS item_id,items.name,items.price,items.promo,items.description,items.stock,categories.id AS category_id, categories.name AS category_name, (SELECT item_images.path FROM item_images WHERE item_images.item_id = items.id ORDER BY item_images.id LIMIT 1) AS path FROM items JOIN categories ON items.category_id = categories.id WHERE items.id > ' . $request->lastId . '  AND items.deleted_at IS NULL AND items.name LIKE "%' . $request->search . '%" AND items.promo IS NOT NULL ORDER BY items.updated_at DESC LIMIT 15 '));
+        }
+
+        // dd($product);
+        if ($product != null) {
+            return response()->json([
+                'message' => 'success',
+                'data' => $product,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'failure',
+                'data' => [],
+            ], 200);
         }
     }
 }

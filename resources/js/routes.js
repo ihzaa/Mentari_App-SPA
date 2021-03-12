@@ -12,6 +12,7 @@ const PageNotFound = () => import("./components/PageNotFound");
 const Cart = () => import("./components/Cart");
 const Riwayat = () => import("./components/Riwayat");
 const ForgotPassword = () => import("./components/ForgotPassword");
+const Promo = () => import("./components/Promo");
 // const ResetPasswordForm = () => import("./components/ResetPasswordForm");
 // import Home from "./components/Home";
 // import Login from "./components/Login";
@@ -80,6 +81,14 @@ const routes = [
         path: "/reset-password",
         name: "reset-password",
         component: ForgotPassword,
+        meta: {
+            notAuthenticated: true
+        }
+    },
+    {
+        path: "/promo",
+        name: "promo",
+        component: Promo,
         meta: {
             notAuthenticated: true
         }

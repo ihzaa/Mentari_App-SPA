@@ -57,7 +57,7 @@ class ItemController extends Controller
                 ]);
             }
         }
-        $items = DB::select(DB::raw('SELECT c.id as "cart_id",i.id as "item_id",c.quantity, i.name, i.price, i.stock as "stock", (SELECT item_images.path FROM item_images WHERE item_images.item_id = i.id LIMIT 1) as img FROM carts as c JOIN items as i ON c.item_id=i.id WHERE c.user_id="' . Auth::user()->id . '" AND c.status="0"'));
+        $items = DB::select(DB::raw('SELECT c.id as "cart_id",i.id as "item_id",c.quantity, i.name, i.price, i.promo, i.stock as "stock", (SELECT item_images.path FROM item_images WHERE item_images.item_id = i.id LIMIT 1) as img FROM carts as c JOIN items as i ON c.item_id=i.id WHERE c.user_id="' . Auth::user()->id . '" AND c.status="0"'));
 
         $addresses = address::where('user_id', Auth::user()->id)->get();
         return response()->json([

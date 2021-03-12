@@ -50,7 +50,7 @@
                                             v-bind:key="index"
                                         >
                                             <div
-                                                class="card-header"
+                                                class="card-header  d-flex justify-content-between"
                                                 id="headingOne"
                                             >
                                                 <h5 class="mb-0">
@@ -69,6 +69,20 @@
                                                         }}
                                                     </button>
                                                 </h5>
+                                                <p
+                                                    class="m-1"
+                                                    style="font-size:14px"
+                                                    v-if="history.status == 0"
+                                                >
+                                                    Sedang diproses
+                                                </p>
+                                                <p
+                                                    class="m-1"
+                                                    style="font-size:14px"
+                                                    v-else
+                                                >
+                                                    Telah terkirim
+                                                </p>
                                             </div>
 
                                             <div

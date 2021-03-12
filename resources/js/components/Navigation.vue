@@ -116,7 +116,12 @@ body {
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-            <div class="search" v-if="this.$route.name === 'home'">
+            <div
+                class="search"
+                v-if="
+                    this.$route.name === 'home' || this.$route.name === 'promo'
+                "
+            >
                 <b-input-group class="search-group mx-auto">
                     <b-form-input
                         size="lg"
@@ -142,6 +147,11 @@ body {
 
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav class="ml-auto mr-4">
+                    <b-nav-item class="shopping-cart" :to="{ name: 'promo' }">
+                        <span>
+                            <strong>Promo</strong>
+                        </span>
+                    </b-nav-item>
                     <b-nav-item class="shopping-cart" :to="{ name: 'home' }">
                         <span>
                             <strong>Home</strong>

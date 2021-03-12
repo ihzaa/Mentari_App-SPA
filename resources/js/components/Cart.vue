@@ -59,15 +59,29 @@
                                             </span></button
                                     ></span>
                                 </p>
-                                <h3>
-                                    <small
-                                        ><strong
-                                            >Rp.
-                                            {{
-                                                formatPrice(item.price)
-                                            }}</strong
-                                        ></small
+                                <h3 v-if="item.promo == null">
+                                    <small>
+                                        <strong
+                                            >Rp. {{ formatPrice(item.price) }}
+                                        </strong>
+                                    </small>
+                                </h3>
+                                <h3
+                                    v-else
+                                    class="d-flex justify-content-between"
+                                >
+                                    <small>
+                                        <strong
+                                            >Rp. {{ formatPrice(item.promo) }}
+                                        </strong>
+                                    </small>
+                                    <b-badge
+                                        variant="success"
+                                        class="align-self-center"
+                                        style="font-size:16px"
                                     >
+                                        Promo
+                                    </b-badge>
                                 </h3>
                                 <h5>
                                     <small>persediaan {{ item.stock }}</small>
@@ -322,7 +336,11 @@ export default {
             let total = 0;
             for (let i = 0; i < this.items.length; i++) {
                 if (this.checkedItem.includes(this.items[i].cart_id)) {
-                    total += this.items[i].quantity * this.items[i].price;
+                    if (this.items[i].promo == null) {
+                        total += this.items[i].quantity * this.items[i].price;
+                    } else {
+                        total += this.items[i].quantity * this.items[i].promo;
+                    }
                 }
             }
             return total;
