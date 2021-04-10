@@ -4,7 +4,14 @@
 }
 .product-card:hover {
     cursor: pointer;
-    box-shadow: 0 8px 16px 0 lightgreen;
+    box-shadow: 0 8px 16px 0 var(--primarycolor);
+}
+.btn {
+    border: var(--primarycolor);
+    background-color: var(--primarycolor);
+}
+.btn:hover {
+    background-color: rgb(41, 119, 209);
 }
 .header {
     background-color: white;
@@ -86,7 +93,9 @@
 
 <template>
     <div class="mx-5 my-3">
-        <h1 class="text-center my-5"><strong>Promo Hari ini!</strong></h1>
+        <h1 class="text-center my-5" style="color: var(--primarycolor)">
+            <strong>Promo Hari ini!</strong>
+        </h1>
         <div class="row text-center" v-if="!cekValue">
             <div class="col-md-12" v-if="searchvalue != ''">
                 <h4>
@@ -176,7 +185,6 @@
                         >
                             <b-button
                                 @click.stop="addToCart(product.item_id)"
-                                variant="success"
                                 v-if="product.stock != 0"
                             >
                                 <b-cart-check-fill
@@ -223,15 +231,10 @@
                     </b-card>
                 </b-row>
                 <div class="text-center my-4" v-show="moreExists">
-                    <b-button
-                        variant="success"
-                        @click="loadMore"
-                        v-if="!loading"
-                    >
+                    <b-button @click="loadMore" v-if="!loading">
                         Tampilkan Lebih Banyak
                     </b-button>
                     <b-button
-                        variant="success"
                         style="font-size: 16px"
                         disabled
                         align-v="center"

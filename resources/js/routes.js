@@ -88,10 +88,7 @@ const routes = [
     {
         path: "/promo",
         name: "promo",
-        component: Promo,
-        meta: {
-            notAuthenticated: true
-        }
+        component: Promo
     },
     // {
     //     path: "/reset-password/:token",

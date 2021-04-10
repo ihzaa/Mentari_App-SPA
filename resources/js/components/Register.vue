@@ -2,6 +2,10 @@
 html {
     height: 100%;
 }
+
+.btn:hover {
+    color: white;
+}
 </style>
 <template>
     <div class="h-100">
@@ -109,7 +113,7 @@ html {
                             <div class="col-md-3 text-right">
                                 <button
                                     type="submit"
-                                    class="btn btn-outline-success ml-auto"
+                                    class="btn btn-outline-info ml-auto"
                                 >
                                     Register
                                 </button>

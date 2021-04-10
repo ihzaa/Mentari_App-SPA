@@ -24,8 +24,8 @@
       "
         >
             <div
-                class="spinner-border text-success"
-                style="width: 5rem; height: 5rem"
+                class="spinner-border"
+                style="width: 5rem; height: 5rem; color: var(--primarycolor)"
                 role="status"
             >
                 <span class="sr-only">Loading...</span>

@@ -17,21 +17,19 @@
                 <b-col class="about" cols="8">
                     <h4><strong>Tentang Kami</strong></h4>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Excepturi voluptatum nostrum alias tenetur, fuga
-                        eius ullam quae. Ab necessitatibus vel molestiae. Odit,
-                        itaque. Officia voluptate velit, nesciunt iusto
-                        repellendus vel.
+                        Mentari Swalayan tempat belanja murah, Hemat, dan
+                        Berkah.
+                        <br /><br />Buka Setiap Hari jam 7 pagi - 9 malam.
                     </p>
                 </b-col>
                 <b-col class="contact">
                     <h4><strong>Hubungi Kami</strong></h4>
                     <p>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing
-                        elit. Ab iure molestias fugit nemo.
+                        Jl. Raya Sengkaling, Jetis, Mulyoagung, Kec. Dau,
+                        Malang, Jawa Timur 65151
                     </p>
-                    <p>Telp : 0882232139</p>
-                    <p>Email: info@mentari.com</p>
+                    <p>Telp : (0341)465422</p>
+                    <!-- <p>Email: info@mentari.com</p> -->
                 </b-col>
             </b-row>
         </b-container>

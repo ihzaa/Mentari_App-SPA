@@ -6,6 +6,13 @@ body {
 .slider {
     min-width: 310px;
 }
+.btn {
+    border: var(--primarycolor);
+    background-color: var(--primarycolor);
+}
+.btn:hover {
+    background-color: rgb(41, 119, 209);
+}
 
 @media only screen and (max-width: 700px) {
     .detail-header {
@@ -103,7 +110,6 @@ body {
                                 </h5>
                                 <b-button
                                     @click="addToCart(id)"
-                                    variant="success"
                                     class="align-self-center"
                                     v-if="detailInfo.stock != 0"
                                 >

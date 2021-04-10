@@ -1,10 +1,17 @@
 <style scoped>
+.btn {
+    border: var(--primarycolor);
+    background-color: var(--primarycolor);
+}
+.btn:hover {
+    background-color: rgb(41, 119, 209);
+}
 .product-card {
     max-width: 20rem;
 }
 .product-card:hover {
     cursor: pointer;
-    box-shadow: 0 8px 16px 0 lightgreen;
+    box-shadow: 0 8px 16px 0 var(--primarycolor);
 }
 .header {
     background-color: white;
@@ -185,7 +192,6 @@
                         >
                             <b-button
                                 @click.stop="addToCart(product.item_id)"
-                                variant="success"
                                 v-if="product.stock != 0"
                             >
                                 <b-cart-check-fill
@@ -200,6 +206,7 @@
                                 disabled
                             >
                                 <b-cart-check-fill
+                                    @click.stop=""
                                     style="width: 20px; height: 20px"
                                 >
                                 </b-cart-check-fill>
@@ -232,15 +239,10 @@
                     </b-card>
                 </b-row>
                 <div class="text-center my-4" v-show="moreExists">
-                    <b-button
-                        variant="success"
-                        @click="loadMore"
-                        v-if="!loading"
-                    >
+                    <b-button @click="loadMore" v-if="!loading">
                         Tampilkan Lebih Banyak
                     </b-button>
                     <b-button
-                        variant="success"
                         style="font-size: 16px"
                         disabled
                         align-v="center"

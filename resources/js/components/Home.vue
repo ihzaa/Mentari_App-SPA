@@ -5,7 +5,9 @@
         </header> -->
         <Carousel />
         <div class="my-4">
-            <h1 align="center"><strong>Produk Kami</strong></h1>
+            <h1 align="center" style="color: var(--primarycolor)">
+                <strong>Produk Kami</strong>
+            </h1>
             <hr />
         </div>
         <Product />

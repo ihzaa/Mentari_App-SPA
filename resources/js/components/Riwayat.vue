@@ -42,7 +42,7 @@
                             <div class="card">
                                 <div class="card-header">Riwayat Belanja</div>
                                 <div class="card-body">
-                                    <div id="accordion">
+                                    <div id="accordion" v-if="count != 0">
                                         <div
                                             class="card mb-2"
                                             v-for="(history,
@@ -118,6 +118,9 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div v-else>
+                                        <h6>Belum ada riwayat pembelian</h6>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -153,7 +156,8 @@ export default {
         return {
             itemId: [],
             histories: [],
-            carts: []
+            carts: [],
+            count: 0
         };
     },
     methods: {
@@ -170,6 +174,7 @@ export default {
                     this.itemId = result.data.item;
                     this.histories = result.data.history;
                     this.carts = result.data.cart;
+                    this.count = result.data.count;
                 })
                 .then(() => {
                     this.$root.$refs.Loading.hide();

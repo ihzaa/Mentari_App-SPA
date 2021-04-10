@@ -1,35 +1,56 @@
 <style>
+:root {
+    --color: #ffffff;
+    --hover: rgb(236, 236, 236);
+    --primarycolor: rgb(16, 173, 244);
+}
+
 body {
     min-height: 100%;
     padding-top: 80px;
 }
+.navbar {
+    background-image: linear-gradient(rgb(16, 173, 244), rgb(73, 185, 233));
+    z-index: 5000;
+}
 .search {
-    width: 30%;
+    width: 25%;
 }
 .search-group {
     width: 90%;
 }
 .authNav {
-    border-left: solid 1px gray;
-    padding-left: 20px;
+    border-left: solid 1px white;
+    padding-left: 10px;
+}
+.authButton {
+    font-size: 12px !important;
+}
+.authButton:hover {
+    color: var(--primarycolor) !important;
 }
 .kategori {
     cursor: pointer;
     margin-right: 30px;
     margin-top: auto;
     margin-bottom: auto;
+    font-size: 14px !important;
 }
 .shopping-cart {
     cursor: pointer;
     margin-right: 30px;
     margin-top: auto;
     margin-bottom: auto;
+    font-size: 14px !important;
+}
+.navbar-dark .navbar-nav .nav-link {
+    color: var(--color);
 }
 /* .shopping-cart:hover {
     border-bottom: 1px solid lightgreen;
 } */
 .shopping-cart:hover span {
-    color: black;
+    color: var(--hover);
 }
 #search {
     border-color: lightgrey;
@@ -50,11 +71,15 @@ body {
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
     border-left: 0;
+    background-color: var(--color);
 }
 
 @media only screen and (max-width: 990px) {
     body {
         padding-top: 120px !important;
+    }
+    .logo {
+        width: 190px;
     }
     .search {
         width: 100%;
@@ -68,9 +93,6 @@ body {
         margin-top: 20px; */
         margin: auto !important;
         position: relative;
-    }
-    .kategori span {
-        font-size: 18px;
     }
     .shopping-cart {
         margin-left: auto;
@@ -105,13 +127,17 @@ body {
     <div>
         <b-navbar
             toggleable="lg"
-            type="light"
-            class="bg-white px-5 fixed-top"
+            type="dark"
+            class="navbar px-5 fixed-top"
             variant="info"
-            style="z-index: 5000"
         >
             <b-navbar-brand :to="{ name: 'home' }">
-                <h1><strong>Mentari</strong></h1>
+                <img
+                    class="logo"
+                    src="/frontend/images/logo-mentari.png"
+                    alt="Logo"
+                />
+                <!-- <img src="Logo mentari.png" alt="Logo" /> -->
             </b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -134,10 +160,12 @@ body {
                     <b-input-group-append>
                         <b-button
                             id="searchButton"
-                            variant="outline-success"
+                            variant="light"
                             @click="emitSearchValue"
                         >
-                            <b-search style="width: 20px; height: 20px">
+                            <b-search
+                                style="color:var(--primarycolor);width: 20px; height: 20px"
+                            >
                             </b-search>
                         </b-button>
                     </b-input-group-append>
@@ -147,14 +175,14 @@ body {
 
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav class="ml-auto mr-4">
-                    <b-nav-item class="shopping-cart" :to="{ name: 'promo' }">
-                        <span>
-                            <strong>Promo</strong>
-                        </span>
-                    </b-nav-item>
                     <b-nav-item class="shopping-cart" :to="{ name: 'home' }">
                         <span>
                             <strong>Home</strong>
+                        </span>
+                    </b-nav-item>
+                    <b-nav-item class="shopping-cart" :to="{ name: 'promo' }">
+                        <span>
+                            <strong>Promo</strong>
                         </span>
                     </b-nav-item>
                     <b-nav-item-dropdown
@@ -201,12 +229,16 @@ body {
                     </b-nav-item>
                     <b-nav-item class="authNav" v-if="check">
                         <router-link :to="{ name: 'register' }">
-                            <b-button class="ml-2" variant="outline-success"
+                            <b-button
+                                class="authButton ml-1"
+                                variant="outline-light"
                                 >Daftar</b-button
                             >
                         </router-link>
                         <router-link :to="{ name: 'login' }">
-                            <b-button class="ml-2" variant="outline-success"
+                            <b-button
+                                class="authButton ml-1"
+                                variant="outline-light"
                                 >Masuk</b-button
                             >
                         </router-link>

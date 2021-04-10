@@ -12,6 +12,7 @@ class TranscationHistoryController extends Controller
     public function getHistory()
     {
         $history = transaction::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get(['cart_id', 'status', 'created_at']);
+        $count = transaction::where('user_id', Auth::user()->id)->count();
         $cart = cart::where('user_id', Auth::user()->id)->where('status', "1")->get(["id", 'item_id', 'quantity'])->keyBy('id');
         $item = item::withTrashed()->pluck('name', 'id');
 
@@ -19,6 +20,7 @@ class TranscationHistoryController extends Controller
             "history" => $history,
             "item" => $item,
             "cart" => $cart,
+            "count" => $count,
         ]);
     }
 }
