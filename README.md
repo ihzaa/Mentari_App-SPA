@@ -1,3 +1,24 @@
+# <p>Cara pakai</p>
+
+## Clone dulu project yang MPA (Admin)
+### Pada project yang MPA (Admin) lakukan
+- copy .env.example menjadi .env
+- atur .env databasenya
+- lakukan perintah: composer install
+- lakukan perintah: php artisan key:generate
+- lakukan perintah: php artisan migrate:fresh --seed
+
+
+## Selanjutnya clone project ini
+### Pada project ini
+- copy .env.example menjadi .env
+- atur .env databasenya
+- lakukan perintah: composer install
+- lakukan perintah: npm run prod
+- lakukan perintah: php artisan key:generate
+- lakukan perintah: php artisan migrate
+- lakukan perintah: php artisan passport:install
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
