@@ -14,6 +14,7 @@
 - copy .env.example menjadi .env
 - atur .env databasenya
 - lakukan perintah: composer install
+- lakukan perintah: npm i
 - lakukan perintah: npm run prod
 - lakukan perintah: php artisan key:generate
 - lakukan perintah: php artisan migrate
