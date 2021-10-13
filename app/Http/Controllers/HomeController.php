@@ -39,6 +39,7 @@ class HomeController extends Controller
                 categories.id AS category_id,
                 categories.name AS category_name,
                 (SELECT item_images.path FROM item_images WHERE item_images.item_id = items.id ORDER BY item_images.id LIMIT 1) AS path')
+            ->orderBy('items.id', 'desc')
             ->orderBy('items.updated_at', 'desc')
             ->limit(15);
         if ($request->lastId != 0) {
