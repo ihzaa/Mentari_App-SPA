@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\category;
+use App\Models\item;
 use App\Models\item_image;
 use App\Models\poster;
 use Illuminate\Http\Request;
@@ -26,21 +27,38 @@ class HomeController extends Controller
     }
     public function getProduct(Request $request)
     {
-        if ($request->search == "" && $request->category == "") {
-            $product = DB::select(DB::raw('SELECT items.id AS item_id,items.name,items.price,items.promo,items.description,items.stock,categories.id AS category_id, categories.name AS category_name, (SELECT item_images.path FROM item_images WHERE item_images.item_id = items.id ORDER BY item_images.id LIMIT 1) AS path FROM items JOIN categories ON items.category_id = categories.id WHERE items.id > ' . $request->lastId . '  AND items.deleted_at IS NULL ORDER BY items.updated_at DESC LIMIT 15'));
-        } else if ($request->search == "") {
-            $product = DB::select(DB::raw('SELECT items.id AS item_id,items.name,items.price,items.promo,items.description,items.stock,categories.id AS category_id, categories.name AS category_name, (SELECT item_images.path FROM item_images WHERE item_images.item_id = items.id ORDER BY item_images.id LIMIT 1) AS path FROM items JOIN categories ON items.category_id = categories.id WHERE items.id > ' . $request->lastId . '  AND items.deleted_at IS NULL AND category_id = ' . $request->category . '  ORDER BY items.updated_at DESC LIMIT 15 '));
-        } else if ($request->category == "") {
-            $product = DB::select(DB::raw('SELECT items.id AS item_id,items.name,items.price,items.promo,items.description,items.stock,categories.id AS category_id, categories.name AS category_name, (SELECT item_images.path FROM item_images WHERE item_images.item_id = items.id ORDER BY item_images.id LIMIT 1) AS path FROM items JOIN categories ON items.category_id = categories.id WHERE items.id > ' . $request->lastId . '  AND items.deleted_at IS NULL AND items.name LIKE "%' . $request->search . '%"  ORDER BY items.updated_at DESC LIMIT 15 '));
-        } else {
-            $product = DB::select(DB::raw('SELECT items.id AS item_id,items.name,items.price,items.promo,items.description,items.stock,categories.id AS category_id, categories.name AS category_name, (SELECT item_images.path FROM item_images WHERE item_images.item_id = items.id ORDER BY item_images.id LIMIT 1) AS path FROM items JOIN categories ON items.category_id = categories.id WHERE items.id > ' . $request->lastId . '  AND items.deleted_at IS NULL AND items.name LIKE "%' . $request->search . '%"  AND category_id = ' . $request->category . '  ORDER BY items.updated_at DESC LIMIT 15 '));
+        $product = DB::table('items')
+            ->join('categories', 'categories.id', '=', 'items.category_id')
+            ->selectRaw('
+                items.id AS item_id,
+                items.name,
+                items.price,
+                items.promo,
+                items.description,
+                items.stock,
+                categories.id AS category_id,
+                categories.name AS category_name,
+                (SELECT item_images.path FROM item_images WHERE item_images.item_id = items.id ORDER BY item_images.id LIMIT 1) AS path')
+            ->orderBy('items.updated_at', 'desc')
+            ->limit(15);
+        if ($request->lastId != 0) {
+            $product = $product->where('items.id', '<', $request->lastId);
         }
+        if ($request->search != "") {
+            $product = $product->where('items.name', 'like', '%' . $request->search . '%');
+        }
+        if ($request->category != "") {
+            $product = $product->where('items.category_id', '=', $request->category);
+        }
+
+        $product = $product->get();
 
         // dd($product);
         if ($product != null) {
             return response()->json([
                 'message' => 'success',
                 'data' => $product,
+                'last_id' => $request->lastId
             ], 200);
         } else {
             return response()->json([
